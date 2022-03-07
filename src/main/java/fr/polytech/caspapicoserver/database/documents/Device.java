@@ -6,7 +6,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document("devices")
+@Document(collection = "devices")
 public class Device {
 
 	@Id
@@ -25,4 +25,21 @@ public class Device {
 		this.allowed = true;
 	}
 
+	public ObjectId getId() {
+		return id;
+	}
+
+	@NonNull
+	public String getDisplayName() {
+		return displayName;
+	}
+
+	@NonNull
+	public String getKey() {
+		return key;
+	}
+
+	public boolean isAllowed() {
+		return allowed;
+	}
 }

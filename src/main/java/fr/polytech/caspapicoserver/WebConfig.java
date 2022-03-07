@@ -1,14 +1,11 @@
 package fr.polytech.caspapicoserver;
 
 import org.springframework.beans.BeansException;
-import org.springframework.boot.autoconfigure.thymeleaf.ThymeleafProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.reactive.config.EnableWebFlux;
-import org.springframework.web.reactive.config.ViewResolverRegistry;
+import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.thymeleaf.spring5.ISpringWebFluxTemplateEngine;
 import org.thymeleaf.spring5.SpringWebFluxTemplateEngine;
@@ -18,8 +15,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
-@EnableWebFlux
-@EnableConfigurationProperties(ThymeleafProperties.class)
+@EnableReactiveMongoRepositories
 public class WebConfig implements ApplicationContextAware, WebFluxConfigurer {
 
 	private ApplicationContext applicationContext;
@@ -53,10 +49,5 @@ public class WebConfig implements ApplicationContextAware, WebFluxConfigurer {
 		ThymeleafReactiveViewResolver viewResolver = new ThymeleafReactiveViewResolver();
 		viewResolver.setTemplateEngine(thymeleafTemplateEngine());
 		return viewResolver;
-	}
-
-	@Override
-	public void configureViewResolvers(ViewResolverRegistry registry) {
-		registry.viewResolver(thymeleafReactiveViewResolver());
 	}
 }
