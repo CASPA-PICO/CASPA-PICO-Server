@@ -15,6 +15,7 @@ import reactor.core.publisher.Mono;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api")
@@ -68,5 +69,32 @@ public class APIController {
 		}))
 		.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
 		.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+	}
+
+	@GetMapping("/devices/activate")
+	public Mono<ResponseEntity<String>> activateDevice(final ServerWebExchange swe){
+		if(!swe.getRequest().getQueryParams().containsKey("activationKey")){
+			return Mono.just(new ResponseEntity<>("missing activationKey parameter", HttpStatus.BAD_REQUEST));
+		}
+
+		String activationKey = swe.getRequest().getQueryParams().getFirst("activationKey");
+		if(activationKey == null || activationKey.isBlank()){
+			return Mono.just(new ResponseEntity<>("missing activationKey parameter", HttpStatus.BAD_REQUEST));
+		}
+
+		return deviceRepository.findByActivationKey(activationKey).flatMap(device ->{
+			if(device.getActivationKeyExpiration().compareTo(LocalDateTime.now()) > 0){
+				device.removeActivationKey();
+				return deviceRepository.save(device).flatMap(device1 -> Mono.just(new ResponseEntity<>(device1.getKey(), HttpStatus.OK)))
+						.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+			}
+			else{
+				device.removeActivationKey();
+				return deviceRepository.save(device).flatMap(device1 -> Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
+						.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+			}
+				})
+				.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
+				.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
 	}
 }

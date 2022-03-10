@@ -13,11 +13,11 @@ import java.security.NoSuchAlgorithmException;
 public class RawData {
 	@Id
 	@NonNull
-	final private String dataHash;
+	private String dataHash;
 	@NonNull
-	final private byte[] data;
+	private byte[] data;
 	@NonNull
-	final private ObjectId deviceID;
+	private ObjectId deviceID;
 
 	public RawData(byte[] data, ObjectId deviceID) throws NoSuchAlgorithmException {
 		this.data = data;
