@@ -28,7 +28,7 @@ public class Device {
 	public Device(@NonNull String displayName) {
 		this.id = new ObjectId();
 		this.displayName = displayName;
-		this.key = RandomStringUtils.randomAlphabetic(64);
+		this.key = RandomStringUtils.randomAlphanumeric(64);
 		this.allowed = true;
 	}
 

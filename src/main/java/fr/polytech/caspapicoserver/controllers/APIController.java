@@ -1,5 +1,6 @@
 package fr.polytech.caspapicoserver.controllers;
 
+import fr.polytech.caspapicoserver.database.documents.Device;
 import fr.polytech.caspapicoserver.database.documents.RawData;
 import fr.polytech.caspapicoserver.database.repositories.DeviceRepository;
 import fr.polytech.caspapicoserver.database.repositories.RawDataRepository;
@@ -42,9 +43,14 @@ public class APIController {
 
 		String key = swe.getRequest().getQueryParams().getFirst("key");
 
-		return deviceRepository.findByKey(key).map(device ->new ResponseEntity<>("ok", HttpStatus.OK))
-				.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
-				.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+		return deviceRepository.findByKey(key).map(device ->{
+			if(device.isAllowed()){
+				return new ResponseEntity<>("ok", HttpStatus.OK);
+			}
+			return new ResponseEntity<>("device not allowed", HttpStatus.FORBIDDEN);
+			})
+			.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
+			.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
 	}
 
 	@PostMapping("/devices/uploadData")
@@ -54,19 +60,25 @@ public class APIController {
 		}
 
 		String key = swe.getRequest().getHeaders().getFirst("X-API-Key");
-		return deviceRepository.findByKey(key).flatMap(device -> DataBufferUtils.join(swe.getRequest().getBody()).flatMap(dataBuffer -> {
-			byte[] bytes = new byte[dataBuffer.readableByteCount()];
-			dataBuffer.read(bytes);
-			DataBufferUtils.release(dataBuffer);
-			RawData rawData;
-			try {
-				rawData = new RawData(bytes, device.getId());
-			} catch (NoSuchAlgorithmException e) {
-				return Mono.just(new ResponseEntity<>("Internal server error : " + e, HttpStatus.INTERNAL_SERVER_ERROR));
+		return deviceRepository.findByKey(key).flatMap(device -> {
+			if(device.isAllowed()){
+				return DataBufferUtils.join(swe.getRequest().getBody()).flatMap(dataBuffer -> {
+					byte[] bytes = new byte[dataBuffer.readableByteCount()];
+					dataBuffer.read(bytes);
+					DataBufferUtils.release(dataBuffer);
+					RawData rawData;
+					try {
+						rawData = new RawData(bytes, device.getId());
+					} catch (NoSuchAlgorithmException e) {
+						return Mono.just(new ResponseEntity<>("Internal server error : " + e, HttpStatus.INTERNAL_SERVER_ERROR));
+					}
+					return rawDataRepository.save(rawData).flatMap(rawData1 -> Mono.just(new ResponseEntity<>("ok", HttpStatus.OK)))
+						.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+					}
+				);
 			}
-			return rawDataRepository.save(rawData).flatMap(rawData1 -> Mono.just(new ResponseEntity<>("ok", HttpStatus.OK)))
-					.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
-		}))
+			return Mono.just(new ResponseEntity<>("device not allowed", HttpStatus.FORBIDDEN));
+		})
 		.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
 		.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
 	}
@@ -96,5 +108,35 @@ public class APIController {
 				})
 				.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
 				.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+	}
+
+
+	//TODO : Remove on production
+	@GetMapping("/devices/create")
+	public Mono<String> createDevice(final ServerWebExchange swe){
+		if(!swe.getRequest().getQueryParams().containsKey("displayName")){
+			return Mono.just("no displayName parameter");
+		}
+		Device device = new Device(swe.getRequest().getQueryParams().getFirst("displayName"));
+		return deviceRepository.save(device).flatMap(device1 -> Mono.just("Created device "+device1.getDisplayName()+" with key : "+device1.getKey()));
+	}
+
+	//TODO : Remove on production
+	@GetMapping("/devices/createActivation")
+	public Mono<String> createActivation(final ServerWebExchange swe){
+		if(!swe.getRequest().getQueryParams().containsKey("key")){
+			return Mono.just("no key parameter");
+		}
+		if(!swe.getRequest().getQueryParams().containsKey("activationKey")){
+			return Mono.just("missing activationKey parameter");
+		}
+
+		return deviceRepository.findByKey(swe.getRequest().getQueryParams().getFirst("key")).flatMap(device -> {
+			if(device == null){
+				return Mono.just("no device");
+			}
+			device.setActivationKey(swe.getRequest().getQueryParams().getFirst("activationKey"));
+			return deviceRepository.save(device).flatMap(device1 -> Mono.just("set device activation key : "+device1.getActivationKey()+" (expires "+device1.getActivationKeyExpiration().toString()+")"));
+		});
 	}
 }
