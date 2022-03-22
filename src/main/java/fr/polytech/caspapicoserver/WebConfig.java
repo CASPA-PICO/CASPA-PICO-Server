@@ -1,5 +1,8 @@
 package fr.polytech.caspapicoserver;
 
+import com.mongodb.MongoClientSettings;
+import com.mongodb.connection.ConnectionPoolSettings;
+import com.mongodb.reactivestreams.client.MongoClient;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -13,6 +16,8 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.reactive.ThymeleafReactiveViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
+
+import java.util.concurrent.TimeUnit;
 
 @Configuration
 @EnableReactiveMongoRepositories

@@ -1,0 +1,340 @@
+html{
+    font-family: "Arial", "serif";
+    background-color: #6abddc;
+    height: 100%;
+    cursor: default;
+    font-weight: 500;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+}
+
+#page{
+    width: auto;
+}
+
+header{
+    color: #FDFFFC;
+    margin: 0vh 5vh 0vh 5vh;
+
+    display: flex;
+    justify-content: space-between;
+    align-items:flex-end;
+
+    border-bottom: 6px black solid;
+}
+
+#titre_principale{
+    font-size: 170%;
+
+    display: flex;
+    align-items: center;
+
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 900px)
+{
+    #CASPAPICO{
+        display: none;
+    }
+}
+
+#logo_principale{
+    width: 170px;
+}
+
+#nav_principale{
+    font-size:160%;
+    margin: 0vh 0vh 5vh 0vh;
+
+    display: flex;
+    justify-content: space-around;
+
+    text-decoration: none;
+    list-style-type: none;
+    white-space: nowrap;
+
+    position: relative;
+}
+
+nav li{
+    padding-right: 15px;
+}
+
+#nav_principale a:hover{
+    font-size: 110%;
+}
+
+.nav_link{
+    color: #FDFFFC;
+    text-decoration: none;
+}
+
+footer{
+    display: flex;
+    justify-content: space-around;
+
+    border-top: 3px black solid;
+
+    margin: 2vh 5vh 0vh 5vh;
+}
+
+.link{
+    color: #FDFFFC;
+    margin-right: 25px;
+    text-decoration: none;
+}
+
+#page_courante{
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#sous_titre_principale{
+    font-size: 110%;
+    background-color: #378dc2;
+
+    display: flex;
+    justify-content: space-around;
+
+    margin: 0vh 5vh 0vh 5vh;
+    padding: 0.5vh 1vh 0.5vh 1vh;
+
+    border-radius: 0px 0px 5px 5px;
+}
+
+#sous_titre_principale .fonction{
+    color:#FDFFFC;
+    margin: 0vh 10vh 0vh 10vh;
+
+    text-decoration: none;
+}
+
+#logo_supervisor{
+    width: 100%;
+    size: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#logo_supervisor #LOGO_SU{
+    width: 150px;
+}
+
+#logo_supervisor #LOGO_INSU{
+    width: 70px;
+}
+
+#logo_supervisor #LOGO_LATMOS{
+    width: 150px;
+}
+
+#logo_supervisor #LOGO_PARTICITAE{
+    width: 90px;
+}
+
+#select{
+    display: flex;
+    justify-content: center;
+
+    margin: 2vh 5vh 0vh 5vh;
+}
+
+.button_nav_appareils{
+    font-size: 120%;
+    cursor: pointer;
+    inline-size:100%;
+    border: black 3px solid;
+}
+
+#liste_appareils{
+    background-color: #9fdc7a;
+    border-radius: 5px 20px 0px 0px;
+    filter: grayscale(50%);
+}
+
+.border{
+    background-color: gray;
+    border: 2px black solid;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+
+.object{
+    padding: 0vh 5vh 0vh 5vh;
+}
+
+.corps_object{
+    font-size: 110%;
+    height: 600px;
+
+    display: flex;
+    border: black 3px solid;
+    border-top: none;
+}
+
+#mes_appareils{
+    background-color: #ecb07c;
+    border-radius: 20px 5px 0px 0px;
+}
+
+#object_liste_appareils{
+    background-color: #b8e29e;
+
+    display: none;
+    justify-content: center;
+}
+
+#object_mes_appareils{
+    background-color: #e6c4a9;
+
+    display: flex;
+}
+
+#mes_appareils_liste{
+    width: 200px;
+
+    border-right: 3px black solid;
+    overflow-y: scroll;
+}
+#mes_appareils_liste::-webkit-scrollbar{
+    display: none;
+}
+
+#ajout_appareil{
+    font-size: 100%;
+    background-color: whitesmoke;
+    width: 100%;
+
+    border: 2px black solid;
+    cursor: pointer;
+}
+
+.ligne_form{
+    border-bottom: 3px rgb(106, 106, 106) solid;
+    border-radius: 0px 0px 0px 15px;
+}
+
+.form_ajout_appareil{
+    width: 70%;
+    margin: 0vh 0vh 0vh 1vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.label_form{
+    width: 25%;
+    min-width: 200px;
+    margin: 0vh 0vh 0vh 5%;
+}
+
+.input_form{
+    width: 75%;
+    min-width: 150px;
+    height: 25px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+.form_ajout_appareil div{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+
+}
+
+#ajout_description{
+    height: 100px;
+}
+
+#boutton_submit{
+    width: 15%;
+    margin-left: 50%;
+
+    justify-self: center;
+    cursor: pointer;
+}
+.un_appareil{
+    font-size: 120%;
+    background-color: #eca57c;
+    width: 100%;
+    height: 75px;
+
+    border: none;
+    cursor: pointer;
+}
+
+.un_appareil_actif{
+    font-size: 140%;
+    font-weight: bold;
+    background-color: #dd805c;
+    width: 100%;
+    height: 75px;
+
+    border: none;
+    cursor: pointer;
+}
+
+#mes_appareils_info{
+    width: 100%;
+    min-width: 100px;
+}
+
+.un_appareil_info_active{
+    height: 100%;
+}
+
+h3{
+    font-size: 140%;
+    display: flex;
+    padding-left: 35%;
+}
+
+#appareil_accueil{
+    display: none;
+}
+
+#appareil_accueil_info{
+    margin: 10vh 5vh 0vh 5vh;
+    border:3px green solid;
+}
+
+.un_appareil_info_cache{
+    display: none;
+}
+
+.un_appareil_info_contenu{
+    margin: 10vh 0vh 0vh 3vh;
+}
+
+.tableau_nom_info{
+    font-weight: 600;
+    font-size: 110%;
+    width: 200px;
+    max-width: 200px;
+
+    word-wrap: break-word;
+}
+
+.tableau_info{
+    font-size: 110%;
+
+    word-wrap: break-word;
+}
+
+.error_header{
+    background-color: red;
+    color: white;
+    padding: 4px 0 4px 10px;
+    display: block;
+    border-radius: 10px;
+    margin: 10px 10px 0 10px;
+    font-weight: bold;
+}
