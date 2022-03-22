@@ -1,523 +1,526 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="utf-8" />
-	<title>CASPA-PICO</title>
-	<link rel="stylesheet" href="others/CASPA-PICO.css" />
-	<script src="others/CASPA-PICO.js" defer></script>
-</head>
+    <head>
+        <meta charset="utf-8" />
+        <title>CASPA-PICO</title>
+        <link rel="stylesheet" href="others/CASPA-PICO.css" />
+        <script src="others/CASPA-PICO.js" defer></script>
+    </head>
 
-<body>
-<div id="page">
-	<header>
-		<div id="titre_principale">
+    <body>
+        <div id="page">
+            <header>
+                <div id="titre_principale">
 
-			<a class="link" href="/"><img src="images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
-			<a class="link" href="/" id="CASPAPICO">CASPA-PICO</a>
+                    <a class="link" href="/"><img src="images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
+                    <a class="link" href="/" id="CASPAPICO">CASPA-PICO</a>
 
-		</div>
+                </div>
 
-		<nav>
-			<ul id="nav_principale">
-				<li>
-					<a class="nav_link" href="/">Accueil</a>
-				</li>
+                <nav>
+                    <ul id="nav_principale">
+                        <li>
+                            <a class="nav_link" href="/">Accueil</a>
+                        </li>
 
-				<li>
-					<a class="nav_link" href="/appareils" id="page_courante">Appareils</a>
-				</li>
+                        <li>
+                            <a class="nav_link" href="/appareils" id="page_courante">Appareils</a>
+                        </li>
 
-				<li>
-					<a class="nav_link" href="/donnees">Données</a>
-				</li>
+                        <li>
+                            <a class="nav_link" href="/donnees">Données</a>
+                        </li>
 
-				<li>
-					<a class="nav_link" href="/a_propos">A propos</a>
-				</li>
-			</ul>
-		</nav>
+                        <li>
+                            <a class="nav_link" href="/a_propos">A propos</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
 
-	</header>
+            <div id="sous_titre_principale">
+                <a class="fonction" href="">TODO</a>
+            </div>
 
-	<div id="sous_titre_principale">
-		<a class="fonction" href="">TODO</a>
-	</div>
+            <div id="corps">
+                <div id="select">
+                    <button class="button_nav_appareils" type="button" id="liste_appareils" onclick="swap_overlay_appareils(this, 'mes_appareils')">Liste des appareils</button>
+                    <button class="button_nav_appareils" type="button" id="mes_appareils" onclick="swap_overlay_appareils(this, 'liste_appareils')">Mes appareils</button>
+                </div>
 
-	<div id="corps">
-		<div id="select">
-			<button class="button_nav_appareils" type="button" id="liste_appareils" onclick="swap_overlay_appareils(this, 'mes_appareils')">Liste des appareils</button>
-			<button class="button_nav_appareils" type="button" id="mes_appareils" onclick="swap_overlay_appareils(this, 'liste_appareils')">Mes appareils</button>
-		</div>
+                <div class="object">
+                    <div class="corps_object" id="object_liste_appareils">
+                        TODO
+                    </div>
 
-		<div class="object">
-			<div class="corps_object" id="object_liste_appareils">
-				TODO
-			</div>
+                    <div class="corps_object" id="object_mes_appareils">
+                        <div id="mes_appareils_liste">
+                            <!-- Correspond à la liste de mes appareils. A ajouter les appareils ici -->
+                            <!-- id d'un appareil = "<USERNAME>_<ID>". id de l'information de l'appreil "<USERNAME>_<ID>_INFO" -->
+                            <!-- <button class="un_appareil" type="button" id=<USERNAME>_<ID> onclick=swap_appareil(this)"> <NOM_APPAREIL> </button> -->
 
-			<div class="corps_object" id="object_mes_appareils">
-				<div id="mes_appareils_liste">
-					<!-- Correspond à la liste de mes appareils. A ajouter les appareils ici -->
-					<!-- id d'un appareil = "<USERNAME>_<ID>". id de l'information de l'appreil "<USERNAME>_<ID>_INFO" -->
-					<!-- <button class="un_appareil" type="button" id=<USERNAME>_<ID> onclick=swap_appareil(this)"> <NOM_APPAREIL> </button> -->
+                            <button type="button" id="ajout_appareil" onclick="ajout_appareil(this)">Ajouter un appareil</button>
 
-					<button type="button" id="ajout_appareil" onclick="ajout_appareil(this)">Ajouter un appareil</button>
+                            <div th:each="device, iter :${devices}" class="border">
+                                <button class="un_appareil" type="button" th:text="${device.displayName}" th:id="'USERNAME_'+${iter.index}" onclick="swap_appareil(this)"></button>
+                            </div>
+                        </div>
 
-					<div th:each="device, iter :${devices}" class="border">
-						<button class="un_appareil" type="button" th:text="${device.displayName}" th:id="'USERNAME_'+${iter.index}" onclick="swap_appareil(this)"></button>
-					</div>
-				</div>
+                        <div id="mes_appareils_info">
+                            <!-- Correspond au information de l'appareil selectionner. A update les informations des apparareils ici -->
+                            <!-- id d'un appareil = "<USERNAME>_<ID>". id de l'information de l'appreil "<USERNAME>_<ID>_info" -->
+                            <!-- <button class="un_appareil" type="button" id=<USERNAME>_<ID> onclick=""> <NOM_APPAREIL> </button> -->
 
-				<div id="mes_appareils_info">
-					<!-- Correspond au information de l'appareil selectionner. A update les informations des apparareils ici -->
-					<!-- id d'un appareil = "<USERNAME>_<ID>". id de l'information de l'appreil "<USERNAME>_<ID>_info" -->
-					<!-- <button class="un_appareil" type="button" id=<USERNAME>_<ID> onclick=""> <NOM_APPAREIL> </button> -->
+                            <div th:class="${showAdd != null ? 'un_appareil_info_actif' : 'un_appareil_info_cache'}" id="ajout_appareil_INFO">
+                                <h3>Ajout d'un appareil</h3>
 
-					<div th:class="${showAdd != null ? 'un_appareil_info_actif' : 'un_appareil_info_cache'}" id="ajout_appareil_INFO">
-						<h3>Ajout d'un appareil</h3>
-						<form class="form_ajout_appareil" method="post" th:action="@{/appareils}" th:object="${device}">
-							<div style="display: block; padding: 0">
-								<span th:if="${#fields.hasErrors('displayName')}" class="error_header">Erreur dans le nom de l'appareil</span>
-								<div class="ligne_form">
-									<label class="label_form" for="ajout_nom_appareil">Nom de l'appareil :</label>
-									<input th:value="*{displayName}" th:field="*{displayName}" class="input_form" type="text" name="ajout_nom_appareil" id="ajout_nom_appareil" placeholder= "Nom de l'appareil" required/>
-								</div>
-							</div>
+                                <p id="required_form">* Champs obligatoires</p>
 
-							<div class="ligne_form">
-								<label class="label_form" for="ajout_num_appareil">Code d'activation :</label>
-								<input th:field="*{activationKey}" class="input_form" type="number" name="ajout_num_appareil" min="0" max="999999" id="ajout_num_appareil" placeholder="Facultatif : code à 6 chiffre. ex: 123456"/>
-							</div>
+                                <form class="form_ajout_appareil" method="post" th:action="@{/appareils}" th:object="${device}">
+                                    <div style="display: block; padding: 0">
+                                        <span th:if="${#fields.hasErrors('displayName')}" class="error_header">Erreur dans le nom de l'appareil</span>
+                                        <div class="ligne_form">
+                                            <label class="label_form" for="ajout_nom_appareil">Nom de l'appareil :</label>
+                                            <input th:value="*{displayName}" th:field="*{displayName}" class="input_form" type="text" name="ajout_nom_appareil" id="ajout_nom_appareil" placeholder= "Nom de l'appareil" required/>
+                                        </div>
+                                    </div>
 
-							<div class="ligne_form">
-								<label class="label_form" for="ajout_pays">Location :</label>
-								<select class="input_form" name="ajout_pays" id="ajout_pays">
-									<option value="AF">Afghanistan</option>
-									<option value="ZA">Afrique du Sud</option>
-									<option value="AL">Albanie</option>
-									<option value="DZ">Algérie</option>
-									<option value="DE">Allemagne</option>
-									<option value="MK">Ancienne République yougoslave de Macédoine</option>
-									<option value="AD">Andorre</option>
-									<option value="AO">Angola</option>
-									<option value="AI">Anguilla</option>
-									<option value="AQ">Antarctique</option>
-									<option value="AG">Antigua-et-Barbuda</option>
-									<option value="AN">Antilles néerlandaises</option>
-									<option value="SA">Arabie saoudite</option>
-									<option value="AR">Argentine</option>
-									<option value="AM">Arménie</option>
-									<option value="AW">Aruba</option>
-									<option value="AU">Australie</option>
-									<option value="AT">Autriche</option>
-									<option value="AZ">Azerbaïdjan</option>
-									<option value="BS">Bahamas</option>
-									<option value="BH">Bahreïn</option>
-									<option value="BD">Bangladesh</option>
-									<option value="BB">Barbade</option>
-									<option value="BE">Belgique</option>
-									<option value="BZ">Belize</option>
-									<option value="BJ">Bénin</option>
-									<option value="BM">Bermudes</option>
-									<option value="BT">Bhoutan</option>
-									<option value="BY">Biélorussie</option>
-									<option value="BO">Bolivie</option>
-									<option value="BA">Bosnie-et-Herzégovine</option>
-									<option value="BW">Botswana</option>
-									<option value="BR">Brésil</option>
-									<option value="BN">Brunei Darussalam</option>
-									<option value="BG">Bulgarie</option>
-									<option value="BF">Burkina Faso</option>
-									<option value="BI">Burundi</option>
-									<option value="KH">Cambodge</option>
-									<option value="CM">Cameroun</option>
-									<option value="CA">Canada</option>
-									<option value="CV">Cap-Vert</option>
-									<option value="CL">Chili</option>
-									<option value="CN">Chine</option>
-									<option value="CY">Chypre</option>
-									<option value="CO">Colombie</option>
-									<option value="KM">Comores</option>
-									<option value="CG">Congo</option>
-									<option value="CR">Costa Rica</option>
-									<option value="CI">Côte d'Ivoire</option>
-									<option value="HR">Croatie</option>
-									<option value="CU">Cuba</option>
-									<option value="DK">Danemark</option>
-									<option value="DJ">Djibouti</option>
-									<option value="DM">Dominique</option>
-									<option value="EG">Égypte</option>
-									<option value="SV">El Salvador</option>
-									<option value="AE">Émirats arabes unis</option>
-									<option value="EC">Équateur</option>
-									<option value="ER">Érythrée</option>
-									<option value="ES">Espagne</option>
-									<option value="EE">Estonie</option>
-									<option value="FM">États fédérés de Micronésie</option>
-									<option value="US">États-Unis</option>
-									<option value="ET">Éthiopie</option>
-									<option value="FJ">Fidji</option>
-									<option value="FI">Finlande</option>
-									<option value="FR" selected>France</option>
-									<option value="GA">Gabon</option>
-									<option value="GM">Gambie</option>
-									<option value="GE">Géorgie</option>
-									<option value="GS">Géorgie du Sud-et-les Îles Sandwich du Sud</option>
-									<option value="GH">Ghana</option>
-									<option value="GI">Gibraltar</option>
-									<option value="GR">Grèce</option>
-									<option value="GD">Grenade</option>
-									<option value="GL">Groenland</option>
-									<option value="GP">Guadeloupe</option>
-									<option value="GU">Guam</option>
-									<option value="GT">Guatemala</option>
-									<option value="GN">Guinée</option>
-									<option value="GQ">Guinée équatoriale</option>
-									<option value="GW">Guinée-Bissau</option>
-									<option value="GY">Guyane</option>
-									<option value="GF">Guyane française</option>
-									<option value="HT">Haïti</option>
-									<option value="HN">Honduras</option>
-									<option value="HK">Hong Kong</option>
-									<option value="HU">Hongrie</option>
-									<option value="BV">Ile Bouvet</option>
-									<option value="CX">Ile Christmas</option>
-									<option value="NF">Île Norfolk</option>
-									<option value="PN">Île Pitcairn</option>
-									<option value="AX">Iles Aland</option>
-									<option value="KY">Iles Cayman</option>
-									<option value="CC">Iles Cocos (Keeling)</option>
-									<option value="CK">Iles Cook</option>
-									<option value="FO">Îles Féroé</option>
-									<option value="HM">Îles Heard-et-MacDonald</option>
-									<option value="FK">Îles Malouines</option>
-									<option value="MP">Îles Mariannes du Nord</option>
-									<option value="MH">Îles Marshall</option>
-									<option value="UM">Îles mineures éloignées des États-Unis</option>
-									<option value="SB">Îles Salomon</option>
-									<option value="TC">Îles Turques-et-Caïques</option>
-									<option value="VG">Îles Vierges britanniques</option>
-									<option value="VI">Îles Vierges des États-Unis</option>
-									<option value="IN">Inde</option>
-									<option value="ID">Indonésie</option>
-									<option value="IQ">Iraq</option>
-									<option value="IE">Irlande</option>
-									<option value="IS">Islande</option>
-									<option value="IL">Israël</option>
-									<option value="IT">Italie</option>
-									<option value="LY">Jamahiriya arabe libyenne</option>
-									<option value="JM">Jamaïque</option>
-									<option value="JP">Japon</option>
-									<option value="JO">Jordanie</option>
-									<option value="KZ">Kazakhstan</option>
-									<option value="KE">Kenya</option>
-									<option value="KG">Kirghizistan</option>
-									<option value="KI">Kiribati</option>
-									<option value="KW">Koweït</option>
-									<option value="LS">Lesotho</option>
-									<option value="LV">Lettonie</option>
-									<option value="LB">Liban</option>
-									<option value="LR">Libéria</option>
-									<option value="LI">Liechtenstein</option>
-									<option value="LT">Lituanie</option>
-									<option value="LU">Luxembourg</option>
-									<option value="MO">Macao</option>
-									<option value="MG">Madagascar</option>
-									<option value="MY">Malaisie</option>
-									<option value="MW">Malawi</option>
-									<option value="MV">Maldives</option>
-									<option value="ML">Mali</option>
-									<option value="MT">Malte</option>
-									<option value="MA">Maroc</option>
-									<option value="MQ">Martinique</option>
-									<option value="MU">Maurice</option>
-									<option value="MR">Mauritanie</option>
-									<option value="YT">Mayotte</option>
-									<option value="MX">Mexique</option>
-									<option value="MC">Monaco</option>
-									<option value="MN">Mongolie</option>
-									<option value="MS">Montserrat</option>
-									<option value="MZ">Mozambique</option>
-									<option value="MM">Myanmar</option>
-									<option value="NA">Namibie</option>
-									<option value="NR">Nauru</option>
-									<option value="NP">Népal</option>
-									<option value="NI">Nicaragua</option>
-									<option value="NE">Niger</option>
-									<option value="NG">Nigéria</option>
-									<option value="NU">Niué</option>
-									<option value="NO">Norvège</option>
-									<option value="NC">Nouvelle-Calédonie</option>
-									<option value="NZ">Nouvelle-Zélande</option>
-									<option value="OM">Oman</option>
-									<option value="UG">Ouganda</option>
-									<option value="UZ">Ouzbékistan</option>
-									<option value="PK">Pakistan</option>
-									<option value="PW">Palaos</option>
-									<option value="PA">Panama</option>
-									<option value="PG">Papouasie-Nouvelle-Guinée</option>
-									<option value="PY">Paraguay</option>
-									<option value="NL">Pays-Bas</option>
-									<option value="PE">Pérou</option>
-									<option value="PH">Philippines</option>
-									<option value="PL">Pologne</option>
-									<option value="PF">Polynésie française</option>
-									<option value="PR">Porto Rico</option>
-									<option value="PT">Portugal</option>
-									<option value="TW">Province chinoise de Taiwan</option>
-									<option value="QA">Qatar</option>
-									<option value="SY">République arabe syrienne</option>
-									<option value="CF">République centrafricaine</option>
-									<option value="KR">République de Corée</option>
-									<option value="MD">République de Moldavie</option>
-									<option value="CD">République démocratique du Congo</option>
-									<option value="DO">République dominicaine</option>
-									<option value="IR">République islamique d'Iran</option>
-									<option value="KP">République populaire démocratique de Corée</option>
-									<option value="LA">République Populaire du Laos</option>
-									<option value="CZ">République tchèque</option>
-									<option value="TZ">République-Unie de Tanzanie</option>
-									<option value="RE">Réunion</option>
-									<option value="RO">Roumanie</option>
-									<option value="GB">Royaume-Uni</option>
-									<option value="RU">Russie</option>
-									<option value="RW">Rwanda</option>
-									<option value="EH">Sahara occidental</option>
-									<option value="KN">Saint-Christophe-et-Niévès</option>
-									<option value="SM">Saint-Marin</option>
-									<option value="PM">Saint-Pierre-et-Miquelon</option>
-									<option value="VA">Saint-Siège (Cité du Vatican)</option>
-									<option value="VC">Saint-Vincent-et-les Grenadines</option>
-									<option value="SH">Sainte-Hélène</option>
-									<option value="LC">Sainte-Lucie</option>
-									<option value="WS">Samoa</option>
-									<option value="AS">Samoa américaines</option>
-									<option value="ST">Sao Tomé-et-Principe</option>
-									<option value="SN">Sénégal</option>
-									<option value="CS">Serbie-et-Monténégro</option>
-									<option value="SC">Seychelles</option>
-									<option value="SL">Sierra Leone</option>
-									<option value="SG">Singapour</option>
-									<option value="SK">Slovaquie</option>
-									<option value="SI">Slovénie</option>
-									<option value="SO">Somalie</option>
-									<option value="SD">Soudan</option>
-									<option value="LK">Sri Lanka</option>
-									<option value="SE">Suède</option>
-									<option value="CH">Suisse</option>
-									<option value="SR">Suriname</option>
-									<option value="SJ">Svalbard et Jan Mayen</option>
-									<option value="SZ">Swaziland</option>
-									<option value="TJ">Tadjikistan</option>
-									<option value="TD">Tchad</option>
-									<option value="IO">Territoire britannique de l'océan Indien</option>
-									<option value="TF">Territoire Francais du Sud</option>
-									<option value="PS">Territoires palestiniens occupés</option>
-									<option value="TH">Thaïlande</option>
-									<option value="TL">Timor oriental</option>
-									<option value="TG">Togo</option>
-									<option value="TK">Tokelau</option>
-									<option value="TO">Tonga</option>
-									<option value="TT">Trinité-et-Tobago</option>
-									<option value="TN">Tunisie</option>
-									<option value="TM">Turkménistan</option>
-									<option value="TR">Turquie</option>
-									<option value="TV">Tuvalu</option>
-									<option value="UA">Ukraine</option>
-									<option value="UY">Uruguay</option>
-									<option value="VU">Vanuatu</option>
-									<option value="VE">Vénézuéla</option>
-									<option value="VN">Vietnam</option>
-									<option value="WF">Wallis-et-Futuna</option>
-									<option value="YE">Yémen</option>
-									<option value="ZM">Zambie</option>
-									<option value="ZW">Zimbabwe</option>
-								</select>
-							</div>
+                                    <div class="ligne_form">
+                                        <label class="label_form" for="ajout_num_appareil">Code d'activation :</label>
+                                        <input th:field="*{activationKey}" class="input_form" type="number" name="ajout_num_appareil" min="0" max="999999" id="ajout_num_appareil" placeholder="Facultatif : code à 6 chiffre. ex: 123456"/>
+                                    </div>
 
-							<div class="ligne_form">
-								<label class="label_form" for="ajout_ville">Ville :</label>
-								<select class="input_form" name="ajout_ville" id="ajout_ville">
-									<option value="none" selected> Non précisé</option>
-									<option value="bourg">Bour-en-Bresse (01)</option>
-									<option value="laon">Laon (02)</option>
-									<option value="moulins">Moulins (03)</option>
-									<option value="digne">Digne (04)</option>
-									<option value="gap">Gap (05)</option>
-									<option value="nice">Nice (06)</option>
-									<option value="privas">Privas (07)</option>
-									<option value="charleville">Charleville-Mézières (08)</option>
-									<option value="foix">Foix (09)</option>
-									<option value="troyes">Troyes (10)</option>
-									<option value="carcassonne">Carcassonne (11)</option>
-									<option value="rodez">Rodez (12)</option>
-									<option value="marseille">Marseille (13)</option>
-									<option value="caen">Caen (14)</option>
-									<option value="aurillac">Aurilac (15)</option>
-									<option value="angouleme">Angoulême (16)</option>
-									<option value="larochelle">La Rochelle (17)</option>
-									<option value="bourges">Bourges (18)</option>
-									<option value="tulle">Tulle (19)</option>
-									<option value="ajaccio">Ajaccio (2A)</option>
-									<option value="bastia">Bastia (2B)</option>
-									<option value="dijon">Dijon (21)</option>
-									<option value="saintbrieuc">Saint-Brieuc (22)</option>
-									<option value="gueret">Guéret (23)</option>
-									<option value="perigueux">Périgueux (24)</option>
-									<option value="besancon">Besançon (25)</option>
-									<option value="lille">Valence (26)</option>
-									<option value="evreux">Evreux (27)</option>
-									<option value="chartres">Chartres (28)</option>
-									<option value="quimper">Quimper (29)</option>
-									<option value="nimes">Nîmes (30)</option>
-									<option value="toulouse">Toulouse (31)</option>
-									<option value="auch">Auch (32)</option>
-									<option value="bordeaux">Bordeaux (33)</option>
-									<option value="montpellier">Montpellier (34)</option>
-									<option value="rennes">Rennes (35)</option>
-									<option value="chateauroux">chateauroux (36)</option>
-									<option value="tours">Tours (37)</option>
-									<option value="grenoble">Grenoble (38)</option>
-									<option value="lons">Lons-le-Saunier (39)</option>
-									<option value="montdemarsan">Mont-de-Marsan (40)</option>
-									<option value="blois">Blois (41)</option>
-									<option value="saintetienne">Saint-Etienne (42)</option>
-									<option value="lepuyenvelay">Le Puy-en-Velay (43)</option>
-									<option value="nantes">Nantes (44)</option>
-									<option value="orleans">Orléans (45)</option>
-									<option value="cahors">Cahors (46)</option>
-									<option value="agen">Agen (47)</option>
-									<option value="mende">Mende (48)</option>
-									<option value="angers">Angers (49)</option>
-									<option value="saintlo">Saint-Lô (50)</option>
-									<option value="chalons">Châlons-en-Champagne (51)</option>
-									<option value="chaumont">Chaumont (52)</option>
-									<option value="laval">Laval (53)</option>
-									<option value="nancy">Nancy (54)</option>
-									<option value="barleduc">Bar-le-Duc (55)</option>
-									<option value="vannes">Vannes (56)</option>
-									<option value="metz">Metz (57)</option>
-									<option value="nevers">Nevers (58)</option>
-									<option value="lille">Lille (59)</option>
-									<option value="beauvais">Beauvais (60)</option>
-									<option value="alencon">Alençon (61)</option>
-									<option value="arras">Arras (62)</option>
-									<option value="clermont">Clermont-Ferrand (63)</option>
-									<option value="pau">Pau (64)</option>
-									<option value="tarbes">Tarbes (65)</option>
-									<option value="perpignan">Perpignan (66)</option>
-									<option value="strasbourg">Strasbourg (67)</option>
-									<option value="colmar">Colmar (68)</option>
-									<option value="lyon">Lyon (69)</option>
-									<option value="vesoul">Vesoul (70)</option>
-									<option value="macon">Mâcon (71)</option>
-									<option value="lemans">Le Mans (72)</option>
-									<option value="chambery">Chambéry (73)</option>
-									<option value="annecy">Annecy (74)</option>
-									<option value="paris">Paris (75)</option>
-									<option value="rouen">Rouen (76)</option>
-									<option value="melun">Melun (77)</option>
-									<option value="versailles">Versailles (78)</option>
-									<option value="niort">Niort (79)</option>
-									<option value="amiens">Amiens (80)</option>
-									<option value="albi">Albi (81)</option>
-									<option value="montauban">Montauban (82)</option>
-									<option value="toulon">Toulon (83)</option>
-									<option value="avignon">Avignon (84)</option>
-									<option value="larochesuryon">La-Roche-sur-Yon (85)</option>
-									<option value="poitiers">Poitiers (86)</option>
-									<option value="limoges">Limoges (87)</option>
-									<option value="epinal">Epinal (88)</option>
-									<option value="auxerre">Auxerre (89)</option>
-									<option value="belfort">Belfort (90)</option>
-									<option value="evry">Evry (91)</option>
-									<option value="nanterre">Nanterre (92)</option>
-									<option value="bobigny">Bobigny (93)</option>
-									<option value="creteil">Créteil (94)</option>
-									<option value="pontoise">Pontoise (95)</option>
-								</select>
-							</div>
+                                    <div class="ligne_form">
+                                        <label class="label_form" for="ajout_pays">Location :</label>
+                                        <select class="input_form" name="ajout_pays" id="ajout_pays">
+                                            <option value="AF">Afghanistan</option>
+                                            <option value="ZA">Afrique du Sud</option>
+                                            <option value="AL">Albanie</option>
+                                            <option value="DZ">Algérie</option>
+                                            <option value="DE">Allemagne</option>
+                                            <option value="MK">Ancienne République yougoslave de Macédoine</option>
+                                            <option value="AD">Andorre</option>
+                                            <option value="AO">Angola</option>
+                                            <option value="AI">Anguilla</option>
+                                            <option value="AQ">Antarctique</option>
+                                            <option value="AG">Antigua-et-Barbuda</option>
+                                            <option value="AN">Antilles néerlandaises</option>
+                                            <option value="SA">Arabie saoudite</option>
+                                            <option value="AR">Argentine</option>
+                                            <option value="AM">Arménie</option>
+                                            <option value="AW">Aruba</option>
+                                            <option value="AU">Australie</option>
+                                            <option value="AT">Autriche</option>
+                                            <option value="AZ">Azerbaïdjan</option>
+                                            <option value="BS">Bahamas</option>
+                                            <option value="BH">Bahreïn</option>
+                                            <option value="BD">Bangladesh</option>
+                                            <option value="BB">Barbade</option>
+                                            <option value="BE">Belgique</option>
+                                            <option value="BZ">Belize</option>
+                                            <option value="BJ">Bénin</option>
+                                            <option value="BM">Bermudes</option>
+                                            <option value="BT">Bhoutan</option>
+                                            <option value="BY">Biélorussie</option>
+                                            <option value="BO">Bolivie</option>
+                                            <option value="BA">Bosnie-et-Herzégovine</option>
+                                            <option value="BW">Botswana</option>
+                                            <option value="BR">Brésil</option>
+                                            <option value="BN">Brunei Darussalam</option>
+                                            <option value="BG">Bulgarie</option>
+                                            <option value="BF">Burkina Faso</option>
+                                            <option value="BI">Burundi</option>
+                                            <option value="KH">Cambodge</option>
+                                            <option value="CM">Cameroun</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="CV">Cap-Vert</option>
+                                            <option value="CL">Chili</option>
+                                            <option value="CN">Chine</option>
+                                            <option value="CY">Chypre</option>
+                                            <option value="CO">Colombie</option>
+                                            <option value="KM">Comores</option>
+                                            <option value="CG">Congo</option>
+                                            <option value="CR">Costa Rica</option>
+                                            <option value="CI">Côte d'Ivoire</option>
+                                            <option value="HR">Croatie</option>
+                                            <option value="CU">Cuba</option>
+                                            <option value="DK">Danemark</option>
+                                            <option value="DJ">Djibouti</option>
+                                            <option value="DM">Dominique</option>
+                                            <option value="EG">Égypte</option>
+                                            <option value="SV">El Salvador</option>
+                                            <option value="AE">Émirats arabes unis</option>
+                                            <option value="EC">Équateur</option>
+                                            <option value="ER">Érythrée</option>
+                                            <option value="ES">Espagne</option>
+                                            <option value="EE">Estonie</option>
+                                            <option value="FM">États fédérés de Micronésie</option>
+                                            <option value="US">États-Unis</option>
+                                            <option value="ET">Éthiopie</option>
+                                            <option value="FJ">Fidji</option>
+                                            <option value="FI">Finlande</option>
+                                            <option value="FR" selected>France</option>
+                                            <option value="GA">Gabon</option>
+                                            <option value="GM">Gambie</option>
+                                            <option value="GE">Géorgie</option>
+                                            <option value="GS">Géorgie du Sud-et-les Îles Sandwich du Sud</option>
+                                            <option value="GH">Ghana</option>
+                                            <option value="GI">Gibraltar</option>
+                                            <option value="GR">Grèce</option>
+                                            <option value="GD">Grenade</option>
+                                            <option value="GL">Groenland</option>
+                                            <option value="GP">Guadeloupe</option>
+                                            <option value="GU">Guam</option>
+                                            <option value="GT">Guatemala</option>
+                                            <option value="GN">Guinée</option>
+                                            <option value="GQ">Guinée équatoriale</option>
+                                            <option value="GW">Guinée-Bissau</option>
+                                            <option value="GY">Guyane</option>
+                                            <option value="GF">Guyane française</option>
+                                            <option value="HT">Haïti</option>
+                                            <option value="HN">Honduras</option>
+                                            <option value="HK">Hong Kong</option>
+                                            <option value="HU">Hongrie</option>
+                                            <option value="BV">Ile Bouvet</option>
+                                            <option value="CX">Ile Christmas</option>
+                                            <option value="NF">Île Norfolk</option>
+                                            <option value="PN">Île Pitcairn</option>
+                                            <option value="AX">Iles Aland</option>
+                                            <option value="KY">Iles Cayman</option>
+                                            <option value="CC">Iles Cocos (Keeling)</option>
+                                            <option value="CK">Iles Cook</option>
+                                            <option value="FO">Îles Féroé</option>
+                                            <option value="HM">Îles Heard-et-MacDonald</option>
+                                            <option value="FK">Îles Malouines</option>
+                                            <option value="MP">Îles Mariannes du Nord</option>
+                                            <option value="MH">Îles Marshall</option>
+                                            <option value="UM">Îles mineures éloignées des États-Unis</option>
+                                            <option value="SB">Îles Salomon</option>
+                                            <option value="TC">Îles Turques-et-Caïques</option>
+                                            <option value="VG">Îles Vierges britanniques</option>
+                                            <option value="VI">Îles Vierges des États-Unis</option>
+                                            <option value="IN">Inde</option>
+                                            <option value="ID">Indonésie</option>
+                                            <option value="IQ">Iraq</option>
+                                            <option value="IE">Irlande</option>
+                                            <option value="IS">Islande</option>
+                                            <option value="IL">Israël</option>
+                                            <option value="IT">Italie</option>
+                                            <option value="LY">Jamahiriya arabe libyenne</option>
+                                            <option value="JM">Jamaïque</option>
+                                            <option value="JP">Japon</option>
+                                            <option value="JO">Jordanie</option>
+                                            <option value="KZ">Kazakhstan</option>
+                                            <option value="KE">Kenya</option>
+                                            <option value="KG">Kirghizistan</option>
+                                            <option value="KI">Kiribati</option>
+                                            <option value="KW">Koweït</option>
+                                            <option value="LS">Lesotho</option>
+                                            <option value="LV">Lettonie</option>
+                                            <option value="LB">Liban</option>
+                                            <option value="LR">Libéria</option>
+                                            <option value="LI">Liechtenstein</option>
+                                            <option value="LT">Lituanie</option>
+                                            <option value="LU">Luxembourg</option>
+                                            <option value="MO">Macao</option>
+                                            <option value="MG">Madagascar</option>
+                                            <option value="MY">Malaisie</option>
+                                            <option value="MW">Malawi</option>
+                                            <option value="MV">Maldives</option>
+                                            <option value="ML">Mali</option>
+                                            <option value="MT">Malte</option>
+                                            <option value="MA">Maroc</option>
+                                            <option value="MQ">Martinique</option>
+                                            <option value="MU">Maurice</option>
+                                            <option value="MR">Mauritanie</option>
+                                            <option value="YT">Mayotte</option>
+                                            <option value="MX">Mexique</option>
+                                            <option value="MC">Monaco</option>
+                                            <option value="MN">Mongolie</option>
+                                            <option value="MS">Montserrat</option>
+                                            <option value="MZ">Mozambique</option>
+                                            <option value="MM">Myanmar</option>
+                                            <option value="NA">Namibie</option>
+                                            <option value="NR">Nauru</option>
+                                            <option value="NP">Népal</option>
+                                            <option value="NI">Nicaragua</option>
+                                            <option value="NE">Niger</option>
+                                            <option value="NG">Nigéria</option>
+                                            <option value="NU">Niué</option>
+                                            <option value="NO">Norvège</option>
+                                            <option value="NC">Nouvelle-Calédonie</option>
+                                            <option value="NZ">Nouvelle-Zélande</option>
+                                            <option value="OM">Oman</option>
+                                            <option value="UG">Ouganda</option>
+                                            <option value="UZ">Ouzbékistan</option>
+                                            <option value="PK">Pakistan</option>
+                                            <option value="PW">Palaos</option>
+                                            <option value="PA">Panama</option>
+                                            <option value="PG">Papouasie-Nouvelle-Guinée</option>
+                                            <option value="PY">Paraguay</option>
+                                            <option value="NL">Pays-Bas</option>
+                                            <option value="PE">Pérou</option>
+                                            <option value="PH">Philippines</option>
+                                            <option value="PL">Pologne</option>
+                                            <option value="PF">Polynésie française</option>
+                                            <option value="PR">Porto Rico</option>
+                                            <option value="PT">Portugal</option>
+                                            <option value="TW">Province chinoise de Taiwan</option>
+                                            <option value="QA">Qatar</option>
+                                            <option value="SY">République arabe syrienne</option>
+                                            <option value="CF">République centrafricaine</option>
+                                            <option value="KR">République de Corée</option>
+                                            <option value="MD">République de Moldavie</option>
+                                            <option value="CD">République démocratique du Congo</option>
+                                            <option value="DO">République dominicaine</option>
+                                            <option value="IR">République islamique d'Iran</option>
+                                            <option value="KP">République populaire démocratique de Corée</option>
+                                            <option value="LA">République Populaire du Laos</option>
+                                            <option value="CZ">République tchèque</option>
+                                            <option value="TZ">République-Unie de Tanzanie</option>
+                                            <option value="RE">Réunion</option>
+                                            <option value="RO">Roumanie</option>
+                                            <option value="GB">Royaume-Uni</option>
+                                            <option value="RU">Russie</option>
+                                            <option value="RW">Rwanda</option>
+                                            <option value="EH">Sahara occidental</option>
+                                            <option value="KN">Saint-Christophe-et-Niévès</option>
+                                            <option value="SM">Saint-Marin</option>
+                                            <option value="PM">Saint-Pierre-et-Miquelon</option>
+                                            <option value="VA">Saint-Siège (Cité du Vatican)</option>
+                                            <option value="VC">Saint-Vincent-et-les Grenadines</option>
+                                            <option value="SH">Sainte-Hélène</option>
+                                            <option value="LC">Sainte-Lucie</option>
+                                            <option value="WS">Samoa</option>
+                                            <option value="AS">Samoa américaines</option>
+                                            <option value="ST">Sao Tomé-et-Principe</option>
+                                            <option value="SN">Sénégal</option>
+                                            <option value="CS">Serbie-et-Monténégro</option>
+                                            <option value="SC">Seychelles</option>
+                                            <option value="SL">Sierra Leone</option>
+                                            <option value="SG">Singapour</option>
+                                            <option value="SK">Slovaquie</option>
+                                            <option value="SI">Slovénie</option>
+                                            <option value="SO">Somalie</option>
+                                            <option value="SD">Soudan</option>
+                                            <option value="LK">Sri Lanka</option>
+                                            <option value="SE">Suède</option>
+                                            <option value="CH">Suisse</option>
+                                            <option value="SR">Suriname</option>
+                                            <option value="SJ">Svalbard et Jan Mayen</option>
+                                            <option value="SZ">Swaziland</option>
+                                            <option value="TJ">Tadjikistan</option>
+                                            <option value="TD">Tchad</option>
+                                            <option value="IO">Territoire britannique de l'océan Indien</option>
+                                            <option value="TF">Territoire Francais du Sud</option>
+                                            <option value="PS">Territoires palestiniens occupés</option>
+                                            <option value="TH">Thaïlande</option>
+                                            <option value="TL">Timor oriental</option>
+                                            <option value="TG">Togo</option>
+                                            <option value="TK">Tokelau</option>
+                                            <option value="TO">Tonga</option>
+                                            <option value="TT">Trinité-et-Tobago</option>
+                                            <option value="TN">Tunisie</option>
+                                            <option value="TM">Turkménistan</option>
+                                            <option value="TR">Turquie</option>
+                                            <option value="TV">Tuvalu</option>
+                                            <option value="UA">Ukraine</option>
+                                            <option value="UY">Uruguay</option>
+                                            <option value="VU">Vanuatu</option>
+                                            <option value="VE">Vénézuéla</option>
+                                            <option value="VN">Vietnam</option>
+                                            <option value="WF">Wallis-et-Futuna</option>
+                                            <option value="YE">Yémen</option>
+                                            <option value="ZM">Zambie</option>
+                                            <option value="ZW">Zimbabwe</option>
+                                        </select>
+                                    </div>
 
-							<div class="ligne_form">
-								<label class="label_form" for="ajout_public">Public :</label>
-								<input th:field="*{publicDevice}" type="checkbox" name="ajout_public" id="ajout_public" checked/>
-							</div>
+                                    <div class="ligne_form">
+                                        <label class="label_form" for="ajout_ville">Ville :</label>
+                                        <select class="input_form" name="ajout_ville" id="ajout_ville">
+                                            <option value="none" selected> Non précisé</option>
+                                            <option value="bourg">Bour-en-Bresse (01)</option>
+                                            <option value="laon">Laon (02)</option>
+                                            <option value="moulins">Moulins (03)</option>
+                                            <option value="digne">Digne (04)</option>
+                                            <option value="gap">Gap (05)</option>
+                                            <option value="nice">Nice (06)</option>
+                                            <option value="privas">Privas (07)</option>
+                                            <option value="charleville">Charleville-Mézières (08)</option>
+                                            <option value="foix">Foix (09)</option>
+                                            <option value="troyes">Troyes (10)</option>
+                                            <option value="carcassonne">Carcassonne (11)</option>
+                                            <option value="rodez">Rodez (12)</option>
+                                            <option value="marseille">Marseille (13)</option>
+                                            <option value="caen">Caen (14)</option>
+                                            <option value="aurillac">Aurilac (15)</option>
+                                            <option value="angouleme">Angoulême (16)</option>
+                                            <option value="larochelle">La Rochelle (17)</option>
+                                            <option value="bourges">Bourges (18)</option>
+                                            <option value="tulle">Tulle (19)</option>
+                                            <option value="ajaccio">Ajaccio (2A)</option>
+                                            <option value="bastia">Bastia (2B)</option>
+                                            <option value="dijon">Dijon (21)</option>
+                                            <option value="saintbrieuc">Saint-Brieuc (22)</option>
+                                            <option value="gueret">Guéret (23)</option>
+                                            <option value="perigueux">Périgueux (24)</option>
+                                            <option value="besancon">Besançon (25)</option>
+                                            <option value="lille">Valence (26)</option>
+                                            <option value="evreux">Evreux (27)</option>
+                                            <option value="chartres">Chartres (28)</option>
+                                            <option value="quimper">Quimper (29)</option>
+                                            <option value="nimes">Nîmes (30)</option>
+                                            <option value="toulouse">Toulouse (31)</option>
+                                            <option value="auch">Auch (32)</option>
+                                            <option value="bordeaux">Bordeaux (33)</option>
+                                            <option value="montpellier">Montpellier (34)</option>
+                                            <option value="rennes">Rennes (35)</option>
+                                            <option value="chateauroux">chateauroux (36)</option>
+                                            <option value="tours">Tours (37)</option>
+                                            <option value="grenoble">Grenoble (38)</option>
+                                            <option value="lons">Lons-le-Saunier (39)</option>
+                                            <option value="montdemarsan">Mont-de-Marsan (40)</option>
+                                            <option value="blois">Blois (41)</option>
+                                            <option value="saintetienne">Saint-Etienne (42)</option>
+                                            <option value="lepuyenvelay">Le Puy-en-Velay (43)</option>
+                                            <option value="nantes">Nantes (44)</option>
+                                            <option value="orleans">Orléans (45)</option>
+                                            <option value="cahors">Cahors (46)</option>
+                                            <option value="agen">Agen (47)</option>
+                                            <option value="mende">Mende (48)</option>
+                                            <option value="angers">Angers (49)</option>
+                                            <option value="saintlo">Saint-Lô (50)</option>
+                                            <option value="chalons">Châlons-en-Champagne (51)</option>
+                                            <option value="chaumont">Chaumont (52)</option>
+                                            <option value="laval">Laval (53)</option>
+                                            <option value="nancy">Nancy (54)</option>
+                                            <option value="barleduc">Bar-le-Duc (55)</option>
+                                            <option value="vannes">Vannes (56)</option>
+                                            <option value="metz">Metz (57)</option>
+                                            <option value="nevers">Nevers (58)</option>
+                                            <option value="lille">Lille (59)</option>
+                                            <option value="beauvais">Beauvais (60)</option>
+                                            <option value="alencon">Alençon (61)</option>
+                                            <option value="arras">Arras (62)</option>
+                                            <option value="clermont">Clermont-Ferrand (63)</option>
+                                            <option value="pau">Pau (64)</option>
+                                            <option value="tarbes">Tarbes (65)</option>
+                                            <option value="perpignan">Perpignan (66)</option>
+                                            <option value="strasbourg">Strasbourg (67)</option>
+                                            <option value="colmar">Colmar (68)</option>
+                                            <option value="lyon">Lyon (69)</option>
+                                            <option value="vesoul">Vesoul (70)</option>
+                                            <option value="macon">Mâcon (71)</option>
+                                            <option value="lemans">Le Mans (72)</option>
+                                            <option value="chambery">Chambéry (73)</option>
+                                            <option value="annecy">Annecy (74)</option>
+                                            <option value="paris">Paris (75)</option>
+                                            <option value="rouen">Rouen (76)</option>
+                                            <option value="melun">Melun (77)</option>
+                                            <option value="versailles">Versailles (78)</option>
+                                            <option value="niort">Niort (79)</option>
+                                            <option value="amiens">Amiens (80)</option>
+                                            <option value="albi">Albi (81)</option>
+                                            <option value="montauban">Montauban (82)</option>
+                                            <option value="toulon">Toulon (83)</option>
+                                            <option value="avignon">Avignon (84)</option>
+                                            <option value="larochesuryon">La-Roche-sur-Yon (85)</option>
+                                            <option value="poitiers">Poitiers (86)</option>
+                                            <option value="limoges">Limoges (87)</option>
+                                            <option value="epinal">Epinal (88)</option>
+                                            <option value="auxerre">Auxerre (89)</option>
+                                            <option value="belfort">Belfort (90)</option>
+                                            <option value="evry">Evry (91)</option>
+                                            <option value="nanterre">Nanterre (92)</option>
+                                            <option value="bobigny">Bobigny (93)</option>
+                                            <option value="creteil">Créteil (94)</option>
+                                            <option value="pontoise">Pontoise (95)</option>
+                                        </select>
+                                    </div>
 
-							<div class="ligne_form">
-								<label class="label_form" for="ajout_description">Description :</label>
-								<textarea th:field="*{description}" class="input_form" name="ajout_description" id="ajout_description" placeholder="Facultatif : Ajout d'une courte description"></textarea>
-							</div>
+                                    <div class="ligne_form">
+                                        <label class="label_form" for="ajout_public">Public :</label>
+                                        <input th:field="*{publicDevice}" type="checkbox" name="ajout_public" id="ajout_public" checked/>
+                                    </div>
 
-							<div>
-								<input id="boutton_submit" type="submit" value="Ajouter" />
-							</div>
-						</form>
-					</div>
+                                    <div class="ligne_form">
+                                        <label class="label_form" for="ajout_description">Description :</label>
+                                        <textarea th:field="*{description}" class="input_form" name="ajout_description" id="ajout_description" placeholder="Facultatif : Ajout d'une courte description"></textarea>
+                                    </div>
 
-					<div th:class="${showAdd == null ? 'un_appareil_info_actif' : 'un_appareil_info_cache'}" id="ajout_appareil_INFO">
-						<h3>Accueil d'information</h3>
-						<p>Nouvelle accueil</p>
-					</div>
+                                    <div>
+                                        <input id="boutton_submit" type="submit" value="Ajouter" />
+                                    </div>
+                                </form>
+                            </div>
 
-					<div th:each="device, iter : ${devices}" class="un_appareil_info_cache" th:id="'USERNAME_'+${iter.index}+'_INFO'">
-						<h3>Device information</h3>
-						<table class="un_appareil_info_contenu">
-							<tr>
-								<td class="tableau_nom_info">Propriétaire :</td>
-								<td class="tableau_info" id="tableau_proprietaire" >N/A</td>
-							</tr>
+                            <div th:class="${showAdd == null ? 'un_appareil_info_actif' : 'un_appareil_info_cache'}" id="ajout_appareil_INFO">
+                                <h3>Accueil d'information</h3>
+                                <p id="appareil_accueil_info">Nouvelle acceuil</p>
+                            </div>
 
-							<tr>
-								<td class="tableau_nom_info">Nom de l'appareil :</td>
-								<td class="tableau_info" id="tableau_nom_appareil" th:text="${device.displayName}" ></td>
-							</tr>
+                            <div th:each="device, iter : ${devices}" class="un_appareil_info_cache" th:id="'USERNAME_'+${iter.index}+'_INFO'">
+                                <h3>Device information</h3>
+                                <table class="un_appareil_info_contenu">
+                                    <tr>
+                                        <td class="tableau_nom_info">Propriétaire :</td>
+                                        <td class="tableau_info" id="tableau_proprietaire" >N/A</td>
+                                    </tr>
 
-							<tr>
-								<td class="tableau_nom_info">Date de création:</td>
-								<td class="tableau_info" id="tableau_date" >N/A</td>
-							</tr>
+                                    <tr>
+                                        <td class="tableau_nom_info">Nom de l'appareil :</td>
+                                        <td class="tableau_info" id="tableau_nom_appareil" th:text="${device.displayName}" ></td>
+                                    </tr>
 
-							<tr>
-								<td class="tableau_nom_info">Location :</td>
-								<td class="tableau_info" id="tableau_location_pays">N/A</td>
-								<td class="tableau_info" id="tableau_location_ville">N/A</td>
-							</tr>
+                                    <tr>
+                                        <td class="tableau_nom_info">Date de création:</td>
+                                        <td class="tableau_info" id="tableau_date" >N/A</td>
+                                    </tr>
 
-							<tr>
-								<td class="tableau_nom_info">Status :</td>
-								<td class="tableau_info" id="tableau_status">N/A</td>
-							</tr>
+                                    <tr>
+                                        <td class="tableau_nom_info">Location :</td>
+                                        <td class="tableau_info" id="tableau_location_pays">N/A</td>
+                                        <td class="tableau_info" id="tableau_location_ville">N/A</td>
+                                    </tr>
 
-							<tr>
-								<td class="tableau_nom_info">Public :</td>
-								<td class="tableau_info" id="tableau_public">Oui</td>
-							</tr>
+                                    <tr>
+                                        <td class="tableau_nom_info">Status :</td>
+                                        <td class="tableau_info" id="tableau_status">N/A</td>
+                                    </tr>
 
-							<tr>
-								<td class="tableau_nom_info">Dernière données :</td>
-								<td class="tableau_info" id="tableau_derniere_donnee">N/A</td>
-							</tr>
+                                    <tr>
+                                        <td class="tableau_nom_info">Public :</td>
+                                        <td class="tableau_info" id="tableau_public">Oui</td>
+                                    </tr>
 
-							<tr>
-								<td class="tableau_nom_info">Description :</td>
-								<td class="tableau_info" id="tableau_derniere_description">N/A</td>
-							</tr>
-						</table>
-					</div>
-				</div>
-			</div>
+                                    <tr>
+                                        <td class="tableau_nom_info">Dernière données :</td>
+                                        <td class="tableau_info" id="tableau_derniere_donnee">N/A</td>
+                                    </tr>
 
-		</div>
-	</div>
+                                    <tr>
+                                        <td class="tableau_nom_info">Description :</td>
+                                        <td class="tableau_info" id="tableau_derniere_description">N/A</td>
+                                    </tr>
+                                </table>
+                                <button type="button" id="rouage" onclick=""><img src="images/rouage.png" alt="parametre" id="logo_rouage"/></button>
+                            </div>
+                        </div>
+                    </div>
 
-	<footer>
-		<figure id="logo_supervisor">
-			<img src="images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
-			<img src="images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
-			<img src="images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
-			<img src="images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
-		</figure>
-	</footer>
-</div>
-</body>
+                </div>
+            </div>
+
+            <footer>
+                <figure id="logo_supervisor">
+                    <img src="images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
+                    <img src="images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
+                    <img src="images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
+                    <img src="images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
+                </figure>
+            </footer>
+        </div>
+    </body>
 
 </html>
