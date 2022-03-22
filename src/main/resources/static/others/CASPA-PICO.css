@@ -252,11 +252,20 @@ footer{
     display: flex;
     align-items: center;
     padding: 10px;
-    
 }
 
 #ajout_description{
     height: 100px;
+}
+
+.error_header{
+    background-color: rgb(220, 60, 60);
+    color: white;
+    padding: 4px 0 4px 10px;
+    display: block;
+    border-radius: 10px;
+    margin: 10px 10px 0 10px;
+    font-weight: bold;
 }
 
 #boutton_submit{
@@ -266,6 +275,7 @@ footer{
     justify-self: center;
     cursor: pointer;
 }
+
 .un_appareil{
     font-size: 120%;
     background-color: #eca57c;
