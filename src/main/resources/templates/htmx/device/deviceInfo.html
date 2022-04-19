@@ -1,0 +1,61 @@
+<script src="../../../../../../../../../../../../../../Downloads/Website-main/resources/static/src_js/CASPA-PICO.js"></script>
+<div class="un_appareil_info_actif">
+	<h3>Informations de l'appareil</h3>
+	<div id="appareil_corps">
+		<table class="un_appareil_info_contenu">
+			<tr>
+				<td class="tableau_nom_info">Propriétaire :</td>
+				<td class="tableau_info" id="tableau_proprietaire">N/A</td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Nom de l'appareil :</td>
+				<td class="tableau_info" id="tableau_nom_appareil" th:text="${device.displayName}"></td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Date de création:</td>
+				<td class="tableau_info" id="tableau_date"
+					th:text="${@getUtils.getFormatedDate(device.createDate, 'dd/MM/yyyy')}"></td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Location :</td>
+				<td class="tableau_info" id="tableau_location_pays">N/A</td>
+				<td class="tableau_info" id="tableau_location_ville">N/A</td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Status :</td>
+				<td class="tableau_info" id="tableau_status">N/A</td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Public :</td>
+				<td class="tableau_info" id="tableau_public" th:text="${device.publicDevice} ? 'Oui' : 'Non'"></td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Dernière données :</td>
+				<td class="tableau_info" id="tableau_derniere_donnee">N/A</td>
+			</tr>
+
+			<tr>
+				<td class="tableau_nom_info">Description :</td>
+				<td class="tableau_info" id="tableau_derniere_description"
+					th:text="${device.description}"></td>
+			</tr>
+		</table>
+		<a class="rouage" href="parametre.html">
+			<img src="images/rouage.png" alt="parametre" id="logo_rouage1"/>
+			<img src="images/rouage.png" alt="parametre" id="logo_rouage2"/>
+			<img src="images/rouage.png" alt="parametre" id="logo_rouage3"/>
+		</a>
+
+		<button type="button" class="appareillage" onclick="appareillage_on()"
+		th:hx-get="'/webapi/device/activate?deviceKey='+${device.key}" hx-target="#overlay_appareillage">
+			<img src="images/appareillage.png" alt="appareillage" id="logo_appareillage">
+			<p id="ID_appareil">Activer cet appareil</p>
+		</button>
+	</div>
+</div>

@@ -1,9 +1,11 @@
 html{
     font-family: "Arial", "serif";
-    background-color: #6abddc;
+    background-color: #8b8bdd5d; /*8b8bdd83*/
     height: 100%;
     cursor: default;
     font-weight: 500;
+
+    min-width: 900px;
 }
 
 body{
@@ -16,7 +18,7 @@ body{
 }
 
 header{
-    color: #FDFFFC;
+    color: #050505;
     margin: 0vh 5vh 0vh 5vh;
 
     display: flex;
@@ -33,6 +35,15 @@ header{
     align-items: center;
 
     white-space: nowrap;
+}
+
+#titre_principale:hover{
+    transform: scale(1.02);
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
 }
 
 @media screen and (max-width: 900px)
@@ -60,16 +71,26 @@ header{
     position: relative;
 }
 
+a{
+    color: black;
+    text-decoration: none;
+}
+
 nav li{
     padding-right: 15px;
 }
 
-#nav_principale a:hover{
-    font-size: 110%;
+#nav_principale :hover{
+    transform: scale(1.1);
+
+    transition : all 150ms ease-in-out;
+    -o-transition : all 150ms ease-in-out;
+    -moz-transition : all 150ms ease-in-out;
+    -webkit-transition : all 150ms ease-in-out;
 }
 
 .nav_link{
-    color: #FDFFFC;
+    color: #050505;
     text-decoration: none;
 }
 
@@ -83,7 +104,7 @@ footer{
 }
 
 .link{
-    color: #FDFFFC;
+    color: #050505;
     margin-right: 25px;
     text-decoration: none;
 }
@@ -95,7 +116,6 @@ footer{
 
 #sous_titre_principale{
     font-size: 110%;
-    background-color: #378dc2;
 
     display: flex;
     justify-content: space-around;
@@ -103,11 +123,12 @@ footer{
     margin: 0vh 5vh 0vh 5vh;
     padding: 0.5vh 1vh 0.5vh 1vh;
 
+    border-bottom: 3px black solid;
     border-radius: 0px 0px 5px 5px;
 }
 
 #sous_titre_principale .fonction{
-    color:#FDFFFC;
+    color: #050505;
     margin: 0vh 10vh 0vh 10vh;
 
     text-decoration: none;
@@ -147,15 +168,23 @@ footer{
 
 .button_nav_appareils{
     font-size: 120%;
+
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+
     cursor: pointer;
     inline-size:100%;
     border: black 3px solid;
 }
 
+.lien_nav_appareils{
+    width:inherit;
+}
+
 #liste_appareils{
-    background-color: #9fdc7a;
+    background-color: #8e7db5;
     border-radius: 5px 20px 0px 0px;
-    filter: grayscale(50%);
 }
 
 .border{
@@ -167,63 +196,134 @@ footer{
 }
 
 .object{
-    padding: 0vh 5vh 0vh 5vh;
+    margin: 0vh 5vh 0vh 5vh;
 }
 
-.corps_object{
+.corps_object_mes_appareils{
+    background-color: #b1cddf;
+
     font-size: 110%;
-    height: 600px;
+    min-height: 650px;
+    max-height: 1300px;
 
     display: flex;
+
     border: black 3px solid;
     border-top: none;
+
+    overflow-y: auto;
+}
+
+.corps_object_liste{
+    background-color: #8e7db5;
+
+    font-size: 110%;
+    min-height: 650px;
+    max-height: 1300px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border: black 3px solid;
+    border-top: none;
+
+    overflow-y: auto;
+}
+
+.corps_object_liste::-webkit-scrollbar{
+    width: 10px;
+    background-color: #dddddd;
+    border-left: 3px black solid;
+}
+
+.corps_object_liste::-webkit-scrollbar-thumb
+{
+    background-color: #6f6f6f;
+    border: 3px black solid;
+    border-right: none;
 }
 
 #mes_appareils{
-    background-color: #ecb07c;
+    background-color: #b1cddf;
     border-radius: 20px 5px 0px 0px;
-}
-
-#object_liste_appareils{
-    background-color: #b8e29e;
-
-    display: none;
-    justify-content: center;
-}
-
-#object_mes_appareils{
-    background-color: #e6c4a9;
-
-    display: flex;
 }
 
 #mes_appareils_liste{
     width: 200px;
 
+    position: relative;
     border-right: 3px black solid;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 #mes_appareils_liste::-webkit-scrollbar{
-    display: none;
+    width: 10px;
+    background-color: #dddddd;
+    border-left: 3px black solid;
+}
+
+#mes_appareils_liste::-webkit-scrollbar-thumb
+{
+  background-color: #6f6f6f;
+  border: 3px black solid;
+  border-right: none;
+}
+
+.ajout_appareil_corps{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-content: center;
 }
 
 #ajout_appareil{
-    font-size: 100%;
-    background-color: whitesmoke;
+    background-color: #eaeaea;
+    font-size: 110%;
     width: 100%;
 
-    border: 2px black solid;
+    position: sticky;
+    top: 0px;
+
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+
+    border-bottom: 3px solid black;
+    border-left: none;
+    border-right: none;
+
+    text-decoration: none;
     cursor: pointer;
+
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+#ajout_appareil:hover{
+    transform:scale(0.95);
+    border: rgb(255, 65, 65) 3px solid;
+    border-radius: 5%;
+
+    transition : all 2s ease-in-out;
+    -o-transition : all 2s ease-in-out;
+    -moz-transition : all 2s ease-in-out;
+    -webkit-transition : all 2s ease-in-out;
 }
 
 .ligne_form{
-    border-bottom: 3px rgb(106, 106, 106) solid;
+    border-bottom: 3px #6a6a6a solid;
     border-radius: 0px 0px 0px 15px;
+}
+
+#required_form{
+    align-self: center;
+    font-style: italic;
 }
 
 .form_ajout_appareil{
     width: 70%;
-    margin: 0vh 0vh 0vh 1vh;
+    align-self: center;
     display: flex;
     flex-direction: column;
 }
@@ -254,27 +354,43 @@ footer{
     height: 100px;
 }
 
+.error_header{
+    background-color: rgb(220, 60, 60);
+    color: black;
+    padding: 4px 0 4px 10px;
+    display: block;
+    border-radius: 10px;
+    margin: 10px 10px 0 10px;
+    font-weight: bold;
+}
+
 #boutton_submit{
+    font-size: 105%;
+
     width: 15%;
     margin-left: 50%;
 
-    justify-self: center;
+    border-radius: 3px;
+
     cursor: pointer;
 }
 .un_appareil{
     font-size: 120%;
-    background-color: #eca57c;
+    background-color: #67acd3;
     width: 100%;
     height: 75px;
 
     border: none;
     cursor: pointer;
+
+    word-wrap: break-word;
+    overflow: hidden;
 }
 
 .un_appareil_actif{
     font-size: 140%;
     font-weight: bold;
-    background-color: #dd805c;
+    background-color: rgb(34, 142, 204);
     width: 100%;
     height: 75px;
 
@@ -285,18 +401,55 @@ footer{
 #mes_appareils_info{
     width: 100%;
     min-width: 100px;
+
+    overflow: auto;
 }
 
-.un_appareil_info_active{
+#mes_appareils_info::-webkit-scrollbar{
+    width: 10px;
+    background-color: #dddddd;
+    border-left: 3px black solid;
+}
+
+#mes_appareils_info::-webkit-scrollbar-thumb
+{
+    background-color: #6f6f6f;
+    border: 3px black solid;
+    border-right: none;
+}
+
+.un_appareil_info_actif{
     height: 100%;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+
 }
 
 h3{
-    font-size: 140%;
+    font-size: 180%;
     display: flex;
-    padding-left: 35%;
+
+    position:relative;
+    align-self: center;
+    margin-right: 20vh;
+    white-space: nowrap;
 }
 
+h4{
+    font-size: 160%;
+
+    align-self: center;
+    white-space: nowrap;
+}
+
+h5{
+    font-size: 140%;
+
+    align-self: center;
+    white-space: nowrap;
+}
 #appareil_accueil{
     display: none;
 }
@@ -310,31 +463,697 @@ h3{
     display: none;
 }
 
+.appareil_corps{
+    display: flex;
+    flex-direction: column;
+}
+
 .un_appareil_info_contenu{
     margin: 10vh 0vh 0vh 3vh;
+    border-bottom: 3px rgb(106, 106, 106) solid;
+    border-left: 5px rgb(106, 106, 106) solid;
+    border-radius: 0px 0px 0px 15px;
+
+    width: 50%;
 }
 
 .tableau_nom_info{
     font-weight: 600;
     font-size: 110%;
-    width: 200px;
-    max-width: 200px;
-
-    word-wrap: break-word;
+    width: 35%;
 }
 
 .tableau_info{
+    width: 65%;
+    max-height: 300px;
+
     font-size: 110%;
 
-    word-wrap: break-word;
+    white-space: normal;
 }
 
-.error_header{
-    background-color: red;
-    color: white;
-    padding: 4px 0 4px 10px;
-    display: block;
-    border-radius: 10px;
-    margin: 10px 10px 0 10px;
-    font-weight: bold;
+.rouage{
+    background-color: #ffffff;
+
+    position: absolute;
+    width: 130px;
+    height: 135px;
+    top: 10px;
+    right: 10px;
+
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+
+    text-decoration: none;
+    border: 3px black solid;
+    border-radius: 25%;
+
+    cursor: pointer;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+
+.rouage:hover{
+    transform:scale(0.92);
+    border: rgb(255, 65, 65) 3px solid;
+
+    transition : all 2s ease-in-out;
+    -o-transition : all 2s ease-in-out;
+    -moz-transition : all 2s ease-in-out;
+    -webkit-transition : all 2s ease-in-out;
+}
+
+.rouage:hover  #logo_rouage1{
+    transform: rotate(360deg);
+    transition : all 2s ease-in-out;
+    -o-transition : all 2s ease-in-out;
+    -moz-transition : all 2s ease-in-out;
+    -webkit-transition : all 2s ease-in-out;
+}
+
+.rouage:hover  #logo_rouage2{
+    transform: rotate(720deg);
+
+    transition : all 2.5s ease-in-out;
+    -o-transition : all 2.5s ease-in-out;
+    -moz-transition : all 2.5s ease-in-out;
+    -webkit-transition : all 2.5s ease-in-out;
+}
+
+.rouage:hover  #logo_rouage3{
+    transform: rotate(1080deg);
+
+    transition : all 3s ease-in-out;
+    -o-transition : all 3s ease-in-out;
+    -moz-transition : all 3s ease-in-out;
+    -webkit-transition : all 3s ease-in-out;
+}
+
+#logo_rouage1{
+    width: 70px;
+    position: relative;
+    top: 60px;
+    right: -2px;
+}
+
+#logo_rouage2{
+    width: 50px;
+    position: relative;
+    top: -15px;
+    right: 5px;
+}
+
+#logo_rouage3{
+    width: 30px;
+    position: relative;
+    top: -45px;
+    right: 10px;
+}
+
+.appareillage{
+    background-color: transparent;
+    font-size: 110%;
+    font-weight: bolder;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    width: 320px;
+
+    margin: 3vh 0vh 0vh 3vh;
+    border-bottom: 3px rgb(106, 106, 106) solid;
+    border-left: 5px rgb(106, 106, 106) solid;
+    border-radius: 0px 0px 0px 15px;
+    border-top: none;
+    border-right: none;
+
+    cursor: pointer;
+}
+
+#logo_appareillage{
+    width: 60px;
+}
+
+.appareillage:hover{
+    transform: scale(1.01);
+    border-bottom: 3px rgb(255, 65, 65)solid;
+    border-left: 5px rgb(255, 65, 65) solid;
+    border-top: none;
+    border-right: none;
+
+    transition : all 2s ease-in-out;
+    -o-transition : all 2s ease-in-out;
+    -moz-transition : all 2s ease-in-out;
+    -webkit-transition : all 2s ease-in-out;
+}
+
+#overlay_appareillage{
+    background-color: #3939399b;
+    width: 100%;
+    height: 100%;
+
+
+    position: fixed;
+    display: none;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+}
+
+.form_appareillage{
+    font-size: 60px;
+    background-color: rgba(57, 57, 57, 0.897);
+    color: whitesmoke;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    padding: 75px 100px 75px 100px;
+
+    transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transition-delay: 10s;
+
+    border: 5px black solid;
+    border-radius: 30px;
+
+    white-space: nowrap;
+}
+
+.appareillage_close{
+    background-color: transparent;
+    width: 100px;
+    height: 100px;
+
+    font-size: 80px;
+    font-weight: bolder;
+
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    border: 5px black solid;
+    border-radius: 100%;
+    transform: rotate(45deg);
+
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    cursor: pointer;
+}
+
+.appareillage_close:hover{
+    transform: scale(0.92) rotate(45deg);
+    border: rgb(255, 65, 65) 5px solid;
+    background-color: #7d7d7dbd;
+
+    transition : all 2s ease-in-out;
+    -o-transition : all 2s ease-in-out;
+    -moz-transition : all 2s ease-in-out;
+    -webkit-transition : all 2s ease-in-out;
+
+
+}
+
+.appareillage_ligne_form{
+    font-size: 105%;
+    display: flex;
+    flex-direction: column;
+
+    margin: 3vh 0vh 3vh 0vh;
+}
+
+.appareillage_label_form{
+    margin: 2vh 0vh 2vh 0vh;
+    font-weight: 600;
+
+}
+
+.appareillage_input_form{
+    font-size: large;
+    height: 30px;
+
+}
+
+#appareillage_boutton_submit{
+    font-size: large;
+    width: 200px;
+    margin: auto;
+    cursor: pointer;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number]{
+    -moz-appearance: textfield;
+}
+
+.appareil_parametre{
+    font-size: 120%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_parametre_appareil{
+    margin: 0vh 0vh 3vh 3vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    white-space: nowrap;
+}
+
+.parametre_nom_info{
+    font-weight: 600;
+    font-size: 110%;
+    width: 250px;
+    max-width: 250px;
+
+    margin: 10vh 0vh 10vh 0vh;
+
+    white-space: nowrap;
+}
+
+.parametre_info{
+
+    width: 300px;
+
+    white-space:normal;
+}
+
+.parametre_input_form{
+    font-size: 100%;
+
+    margin-left: 5vh;
+
+    width: 60%;
+    height: 30px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+.parametre_select_form{
+    font-size: 100%;
+
+    margin-left: 5vh;
+
+    width: 61.1%;
+    height: 30px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+.parametre_input{
+    font-size: 110%;
+
+    margin-left: 5vh;
+
+    width: 80%;
+    min-height: 200px;
+
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    resize: none;
+}
+
+.parametre_trois_boutton{
+    display: flex;
+    justify-content: center;
+
+}
+.centre_bouttons{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.parametre_boutton{
+    font-size: 100%;
+
+    margin: 0vh 1vh 0vh 5vh;
+
+    border-radius: 3px;
+
+    cursor: pointer;
+}
+
+.form_barre_recherche{
+    width: 80%;
+    min-height: 0px;
+    height: 0px;
+
+    background-image: radial-gradient(circle, #6c5999, #8c7db0);
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: end;
+
+    border-bottom: 3px black solid;
+
+    margin-top: 5vh;
+
+    overflow-y: hidden;
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+}
+
+.ligne_recherche{
+    display: flex;
+    justify-content: center;
+
+    margin: 0vh 5vh 2vh 5vh;
+}
+
+.ligne_recherche_filtre{
+    display: flex;
+    justify-content: space-evenly;
+
+    margin: 0vh 5vh 2vh 5vh;
+}
+
+.recherche_text{
+    width: 50%;
+    height: 25px;
+
+    padding: 5px;
+    outline: none;
+
+    border: 3px solid black;
+    border-right: none;
+    border-radius: 5px 0 0 5px;
+}
+
+.recherche_submit{
+    color: #ccc;
+    width: 40px;
+    background: black;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
+    border: 3px solid black;
+    border-radius: 0 5px 5px 0;
+
+    cursor: pointer;
+}
+
+#loupe_recherche{
+    width: 30px;
+}
+
+.ligne_case_form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self: center;
+}
+
+.input_recherche_form{
+    width: 175px;
+    height: 25px;
+    border: 3px solid black;
+    border-radius: 0 5px 5px 0;
+
+    cursor: pointer;
+}
+
+.open_barre_overlay{
+    height: 40px;
+    display: flex;
+
+    overflow-y: hidden;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+}
+
+.open_barre_recherche{
+    height: 40px;
+    background-color: black;
+
+    border: 3px black solid;
+    border-radius: 0% 0% 50% 50%;
+
+    cursor: pointer;
+}
+
+#open_barre_recherche_left{
+    width: 40px;
+    height: 20px;
+    border-radius: 0% 50% 0% 0%;
+
+    box-shadow: 10px -2px 0px 0px black;
+}
+
+#open_barre_recherche_right{
+    width: 40px;
+    height: 20px;
+    border-radius: 50% 0% 0% 0%;
+
+    box-shadow: -10px -2px 0px 0px black;
+}
+
+.close_barre_overlay{
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.close_barre_recherche{
+    height: 40px;
+    background-color: black;
+
+    border: 3px black solid;
+    border-radius: 50% 50% 0% 0%;
+
+    cursor: pointer;
+
+    overflow-y: visible;
+
+    align-self: flex-end;
+
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+#close_barre_recherche_left{
+    align-self: flex-end;
+
+    width: 40px;
+    height: 20px;
+    border-radius: 0% 0% 50% 0%;
+
+    box-shadow: 7px 2px 0px 0px black;
+}
+
+#close_barre_recherche_right{
+    align-self: flex-end;
+
+    width: 40px;
+    height: 20px;
+    border-radius: 0% 0% 0% 50%;
+
+    box-shadow: -7px 2px 0px 0px black;
+}
+
+.carte_appareil_liste{
+    width: 95%;
+    margin: 10px 10px 10px 10px;
+
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.carte_appareil{
+    height: 275px;
+    width: 275px;
+
+    background-color: #986f82;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    margin: 10px 3vh 10px 3vh;
+
+    cursor: pointer;
+
+    transition : all 2.5s ease-in-out;
+    -o-transition : all 2.5s ease-in-out;
+    -moz-transition : all 2.5s ease-in-out;
+    -webkit-transition : all 2.5s ease-in-out;
+
+    border: 5px black solid;
+    border-radius: 5%;
+
+}
+
+.carte_appareil_image_emplacement{
+    height: 125px;
+    width:100%;
+
+    background-color: #ccc;
+
+    position: relative;
+    top: 15%;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+
+    border-top: 3px black solid;
+    border-bottom: 3px black solid;
+}
+
+.carte_appareil_image{
+    height: 100%;
+    width: 100%;
+
+    object-fit: contain;
+}
+
+.carte_appareil_nom{
+    position: relative;
+    top:2%;
+
+    transition : all 0.9s ease-in-out;
+    -o-transition : all 0.9s ease-in-out;
+    -moz-transition : all 0.9s ease-in-out;
+    -webkit-transition : all 0.9s ease-in-out;
+}
+
+.carte_appareil_info_contenu{
+
+    font: 500;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carte_appareil_info{
+    position: relative;
+    top: 0%;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+}
+
+.carte_appareil:hover{
+    background: #6c5999;
+    background: linear-gradient(135deg, #6c5999 10%, #986f82 90%);
+}
+
+.carte_appareil:hover .carte_appareil_image_emplacement{
+    top: 5%;
+}
+
+.carte_appareil:hover .carte_appareil_nom{
+    top: -5%;
+}
+
+.carte_appareil:hover .carte_appareil_info{
+    visibility: visible;
+    top: -10%;
+    opacity: 100;
+}
+
+#favoris{
+    background-color: #8e7db5;
+    border-radius: 5px 20px 0px 0px;
+}
+
+#map_monde{
+    background-color: #a2deb2;
+    border-radius: 20px 20px 0px 0px;
+}
+
+#historique{
+    background-color: #b1cddf;
+    border-radius: 20px 5px 0px 0px;
+}
+
+.corps_object_historique{
+    background-color: #b1cddf;
+
+    font-size: 110%;
+    min-height: 650px;
+    max-height: 1300px;
+
+    display: flex;
+
+    border: black 3px solid;
+    border-top: none;
+
+    overflow-y: auto;
+}
+
+.corps_object_favoris{
+    background-color: #8e7db5;
+
+    font-size: 110%;
+    min-height: 650px;
+    max-height: 1300px;
+
+    display: flex;
+
+    border: black 3px solid;
+    border-top: none;
+
+    overflow-y: auto;
+}
+
+.corps_object_map_monde{
+    background-color: #a2deb2;
+
+    font-size: 110%;
+    min-height: 650px;
+    max-height: 1300px;
+
+    display: flex;
+
+    border: black 3px solid;
+    border-top: none;
+
+    overflow-y: auto;
 }

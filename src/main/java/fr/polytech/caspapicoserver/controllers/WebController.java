@@ -3,16 +3,19 @@ package fr.polytech.caspapicoserver.controllers;
 import fr.polytech.caspapicoserver.database.documents.Device;
 import fr.polytech.caspapicoserver.database.repositories.DeviceRepository;
 import fr.polytech.caspapicoserver.database.repositories.RawDataRepository;
+import org.bson.types.ObjectId;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.Locale;
+import java.util.TreeMap;
 
 @Controller
 public class WebController {
@@ -31,30 +34,62 @@ public class WebController {
 	}
 
 	@GetMapping("/appareils")
-	public Mono<String> listDevices(Model map){
+	public Mono<String> listDevices(Model map, ServerWebExchange swe){
+		addCountryListToModel(map);
+		return deviceRepository.findByPublicDevice(true, PageRequest.of(0, 10)).collectList().flatMap(devices -> {
+			map.addAttribute("devices", devices);
+			return Mono.just("devices/CASPA-PICO_APPAREILS.html");
+		}).onErrorReturn("devices/CASPA-PICO_APPAREILS.html")
+				.switchIfEmpty(Mono.just("devices/CASPA-PICO_APPAREILS.html"));
+	}
+
+	@GetMapping("/mes-appareils")
+	public Mono<String> listMyDevices(Model map, ServerWebExchange swe){
+		Mono<String> mono = deviceRepository.findByIdNotNull(PageRequest.of(0, 10)).collectList().flatMap(devices -> {
+			map.addAttribute("devices", devices);
+			return Mono.just("devices/CASPA-PICO_MES_APPAREILS.html");
+		}).onErrorReturn("devices/CASPA-PICO_MES_APPAREILS.html");
+
+		var idStr = swe.getRequest().getQueryParams().getFirst("deviceID");
+		if(idStr != null && ObjectId.isValid(idStr)){
+			return deviceRepository.findById(new ObjectId(idStr)).flatMap(device -> {
+				map.addAttribute("selectDeviceId", device.getId());
+				return mono;
+			});
+		}
+		return mono;
+	}
+
+	@GetMapping("/ajout-appareil")
+	public Mono<String> addDevice(Model map, ServerWebExchange swe){
 		if(!map.containsAttribute("device")){
 			map.addAttribute("device", new Device());
 		}
-
-		return deviceRepository.findByIdNotNull(PageRequest.of(0, 10)).collectList().flatMap(devices -> {
-			map.addAttribute("devices", devices);
-			return Mono.just("CASPA-PICO_APPAREIL.html");
-		}).onErrorReturn("CASPA-PICO_APPAREIL.html");
+		addCountryListToModel(map);
+		return Mono.just("devices/CASPA-PICO_ADD_APPAREIL.html");
 	}
 
-	@PostMapping("/appareils")
-	public Mono<String> createDevice(@Valid Device device, BindingResult bindingResult, Model map){
-		map.addAttribute("showAdd", true);
-		if(device.getActivationKey() != null && !device.getActivationKey().isBlank()){
-			if(device.getActivationKey().length() != 6){
-				bindingResult.rejectValue("activationKey", "device.error.activationKey_not_valid", "Clé d'activation invalide !");
-			}
+	@PostMapping("/ajout-appareil")
+	public Mono<String> createDevice(@Valid Device device, BindingResult bindingResult, Model map, ServerWebExchange swe){
+		if(device.getActivationKey() != null && !device.getActivationKey().isBlank() && device.getActivationKey().length() != 6){
+			bindingResult.rejectValue("activationKey", "device.error.activationKey_not_valid", "clé d'activation invalide !");
 		}
 
 		if(!bindingResult.hasErrors()){
-			map.addAttribute("device", new Device());
+			Device newDevice = new Device(device.getDisplayName(), device.isPublicDevice(), device.getDescription());
+			if(device.getActivationKey() != null && !device.getActivationKey().isBlank()){
+				newDevice.setActivationKey(device.getActivationKey());
+			}
+			return deviceRepository.save(newDevice).flatMap(device1 -> {
+				map.addAttribute("createdDevice", device1.getId());
+				return Mono.just("devices/CASPA-PICO_ADD_APPAREIL_SUCCESS.html");
+			}).onErrorResume(throwable -> {
+				bindingResult.rejectValue("displayName", "server.error.database", "erreur interne lors de l'ajout de l'appareil");
+				return addDevice(map, swe);
+			});
 		}
-		return listDevices(map);
+
+		return addDevice(map, swe);
 	}
 
 	@GetMapping("/donnees")
@@ -65,5 +100,15 @@ public class WebController {
 	@GetMapping("/a_propos")
 	public Mono<String> about(){
 		return Mono.just("CASPA-PICO_APROPOS.html");
+	}
+
+	private void addCountryListToModel(Model map){
+		TreeMap<String, String> countryList = new TreeMap<>();
+		for(Locale locale : Locale.getAvailableLocales()){
+			if(!locale.getCountry().isBlank() && !locale.getDisplayCountry(Locale.FRANCE).isBlank()) {
+				countryList.put(locale.getDisplayCountry(Locale.FRANCE), locale.getCountry());
+			}
+		}
+		map.addAttribute("countryList", countryList);
 	}
 }

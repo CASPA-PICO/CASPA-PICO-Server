@@ -138,4 +138,13 @@ public class Device {
 	public void setPublicDevice(boolean publicDevice) {
 		this.publicDevice = publicDevice;
 	}
+
+	@NonNull
+	public LocalDateTime getCreateDate() {
+		return createDate;
+	}
+
+	public LocalDateTime getLastUpdate() {
+		return lastUpdate;
+	}
 }

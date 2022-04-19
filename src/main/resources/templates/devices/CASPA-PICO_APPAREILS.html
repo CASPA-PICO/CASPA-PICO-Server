@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>CASPA-PICO</title>
+	<link rel="stylesheet" href="/others/CASPA-PICO.css" />
+	<script src="/others/CASPA-PICO.js" defer></script>
+</head>
+
+<body>
+<div id="page">
+	<header>
+		<div id="titre_principale">
+			<a class="link" href="/"><img src="/images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
+			<a class="link" href="/" id="CASPAPICO">CASPA-PICO</a>
+		</div>
+
+		<nav>
+			<ul id="nav_principale">
+				<li>
+					<a class="nav_link" href="/">Accueil</a>
+				</li>
+
+				<li>
+					<a class="nav_link" href="/appareils" id="page_courante">Appareils</a>
+				</li>
+
+				<li>
+					<a class="nav_link" href="/donnees">Données</a>
+				</li>
+
+				<li>
+					<a class="nav_link" href="/a_propos">A propos</a>
+				</li>
+			</ul>
+		</nav>
+	</header>
+
+	<div id="sous_titre_principale">
+		<a class="fonction">Cherché n'importe quel appareil présent dans la base de donnée en cliquant sur la petit loupe !</a>
+	</div>
+
+	<div id="corps">
+		<div id="select">
+			<a class="button_nav_appareils" id="liste_appareils" href="/appareils">Liste des appareils</a>
+			<a class="button_nav_appareils" id="mes_appareils" href="/mes-appareils">Mes appareils</a>
+		</div>
+
+		<div class="object">
+			<div class="corps_object_liste">
+
+				<div class="form_barre_recherche" id="form_barre_recherche">
+					<h4>
+						Recherche
+					</h4>
+
+					<form action="TODO">
+						<div class="ligne_recherche">
+							<input class="recherche_text" type="text" placeholder="Rechercher..." name="search">
+							<button class="recherche_submit" type="submit"><img src="/images/loupe.png" id="loupe_recherche" alt="loupe_recherche"></button>
+						</div>
+
+						<div class="ligne_recherche_filtre">
+							<div class="ligne_case_form">
+								<label class="label_form" for="ajout_pays">Localisation :</label>
+								<select class="input_form" name="ajout_pays" id="ajout_pays">
+									<option th:each="inst : ${countryList}" th:value="${inst.value}"
+											th:text="${inst.key}"></option>
+								</select>
+							</div>
+
+							<div class="ligne_case_form">
+								<label class="label_recherche_form" for="recherche_temps">Dernière donnée</label>
+								<select class="input_recherche_form" name="recherche_temps">
+									<option value="ALL" selected>Depuis toujours</option>
+									<option value="JOUR">Depuis aujourd'hui</option>
+									<option value="HIER">Depuis hier</option>
+									<option value="SEMAINE">Depuis une semaine</option>
+									<option value="MOIS">Depuis un mois</option>
+									<option value="ANNEE">Depuis un an</option>
+								</select>
+							</div>
+						</div>
+					</form>
+
+					<div class="close_barre_overlay" id="close_barre_overlay">
+						<div id="close_barre_recherche_left"></div>
+						<button class="close_barre_recherche" onclick="close_recherche()"><img src="/images/fleche_haut.png" id="loupe_recherche" alt="loupe_recherche"></button>
+						<div id="close_barre_recherche_right"></div>
+					</div>
+				</div>
+
+				<div class="open_barre_overlay" id="open_barre_overlay">
+					<div id="open_barre_recherche_left"></div>
+					<button class="open_barre_recherche" onclick="open_recherche()"><img src="/images/loupe.png" id="loupe_recherche" alt="loupe_recherche"></button>
+					<div id="open_barre_recherche_right"></div>
+				</div>
+
+				<div class="carte_appareil_liste">
+					<a th:each="device, iter :${devices}" class="carte_appareil" href="">
+						<!-- TODO : remplacer href par le lien de l'appareil -->
+						<div class="carte_appareil_image_emplacement">
+							<img class="carte_appareil_image" src="/images/LOGO_CASPA-PICO.png" alt="carte_appareil_image">
+						</div>
+
+						<div class="carte_appareil_nom">
+							<h5 th:text="${device.displayName}"></h5>
+						</div>
+
+						<div class="carte_appareil_info">
+							<div class="carte_appareil_info_contenu">
+								<span>Propriétaire : A1</span>
+								<span th:text="${'Dernière synchro : '+@getUtils.getFormatedDate(device.createDate, 'dd/MM/yyyy')}"></span>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<figure id="logo_supervisor">
+			<img src="/images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
+			<img src="/images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
+			<img src="/images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
+			<img src="/images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
+		</figure>
+	</footer>
+</div>
+</body>
+</html>

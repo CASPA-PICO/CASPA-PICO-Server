@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>CASPA-PICO</title>
+	<link rel="stylesheet" href="others/CASPA-PICO.css"/>
+	<script src="others/CASPA-PICO.js" defer></script>
+	<script src="https://unpkg.com/htmx.org@1.7.0"></script>
+</head>
+
+<body>
+<div id="page">
+	<header>
+		<div id="titre_principale">
+
+			<a class="link" href="/"><img src="images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
+			<a class="link" href="/" id="CASPAPICO">CASPA-PICO</a>
+
+		</div>
+
+		<nav>
+			<ul id="nav_principale">
+				<li>
+					<a class="nav_link" href="/">Accueil</a>
+				</li>
+
+				<li>
+					<a class="nav_link" href="/appareils" id="page_courante">Appareils</a>
+				</li>
+
+				<li>
+					<a class="nav_link" href="/donnees">Données</a>
+				</li>
+
+				<li>
+					<a class="nav_link" href="/a_propos">A propos</a>
+				</li>
+			</ul>
+		</nav>
+
+	</header>
+
+	<div id="sous_titre_principale">
+		<a class="fonction">Ajouter des appareils à votre compte pour commencer l'envoie des données au serveur !</a>
+	</div>
+
+	<div id="corps">
+		<div id="select">
+                    <a class="button_nav_appareils" id="liste_appareils" href="/appareils">Liste des appareils</a>
+                    <a class="button_nav_appareils" id="mes_appareils" href="/mes-appareils">Mes appareils</a>
+		</div>
+
+		<div class="object">
+
+			<div class="corps_object_mes_appareils">
+				<div id="mes_appareils_liste">
+					<a id="ajout_appareil" href="/ajout-appareil">Ajouter un appareil</a>
+					<div th:each="device, iter :${devices}" class="border">
+						<button th:class="${(selectDeviceKey != null && selectDeviceKey == device.key) ? 'un_appareil_actif' : 'un_appareil'}"
+								type="button" th:text="${device.displayName}" th:id="'USERNAME_'+${iter.index}"
+								th:hx-get="'/webapi/device/info?deviceKey='+${device.key}" hx-trigger="click" hx-target="#div_appareil_info" onclick="show_appareil(this)"></button>
+					</div>
+				</div>
+
+				<div id="mes_appareils_info">
+					<div th:class="${selectDeviceKey == null ? 'un_appareil_info_actif' : 'un_appareil_info_cache'}"
+						 id="default_appareil_INFO">
+						<h3>Accueil d'information</h3>
+						<p>Nouvelle accueil</p>
+					</div>
+
+					<div th:if="${selectDeviceKey == null}" id="div_appareil_info"></div>
+					<div th:if="${selectDeviceKey != null}" id="div_appareil_info" th:hx-get="'/webapi/device/info?deviceKey='+${selectDeviceKey}" hx-trigger="load"></div>
+
+					<div id="overlay_appareillage"></div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<footer>
+		<figure id="logo_supervisor">
+			<img src="images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
+			<img src="images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
+			<img src="images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
+			<img src="images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
+		</figure>
+	</footer>
+</div>
+</body>
+
+</html>

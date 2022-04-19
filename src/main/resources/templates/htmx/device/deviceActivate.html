@@ -1,0 +1,20 @@
+<div th:if="${success == null}" class="form_appareillage">
+	<form>
+		<button type="button" class="appareillage_close" onclick="appareillage_off()">
+			+
+		</button>
+		<div class="appareillage_ligne_form">
+			<label class="appareillage_label_form">Code d'activation</label>
+			<div th:if="${activationError != null}" th:text="${activationError}"></div>
+			<input class="appareillage_input_form" type="number" name="activationKey" id="activationKey" min="0" max="999999" placeholder="Code à 6 chiffre. ex: 123456" required/>
+			<input type="hidden" name="deviceKey" id="deviceKey" th:value="${deviceKey}">
+		</div>
+		<div class="appareillage_ligne_form">
+			<button hx-post="/webapi/device/activate" hx-target="#overlay_appareillage" id="appareillage_boutton_submit">Valider</button>
+		</div>
+	</form>
+</div>
+<div th:if="${success != null}" class="form_appareillage">
+	<h2>Activation enregistré !</h2>
+	<button onclick="appareillage_off()">Fermer</button>
+</div>

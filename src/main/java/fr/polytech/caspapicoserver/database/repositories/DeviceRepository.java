@@ -13,4 +13,5 @@ public interface DeviceRepository extends ReactiveMongoRepository<Device, Object
 	Mono<Device> findByKey(String key);
 	Flux<Device> findByIdNotNull(Pageable pageable);
 	Mono<Device> findByActivationKey(String key);
+	Flux<Device> findByPublicDevice(Boolean publicDevice, Pageable pageable);
 }
