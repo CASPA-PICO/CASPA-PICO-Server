@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 @Repository
 public interface DeviceRepository extends ReactiveMongoRepository<Device, ObjectId> {
 	Mono<Device> findByKey(String key);
-	Flux<Device> findByIdNotNull(Pageable pageable);
+	Flux<Device> findByOwner(ObjectId owner, Pageable pageable);
 	Mono<Device> findByActivationKey(String key);
 	Flux<Device> findByPublicDevice(Boolean publicDevice, Pageable pageable);
 }

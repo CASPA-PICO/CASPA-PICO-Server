@@ -57,7 +57,7 @@
 					<form action="TODO">
 						<div class="ligne_recherche">
 							<input class="recherche_text" type="text" placeholder="Rechercher..." name="search">
-							<button class="recherche_submit" type="submit"><img src="/images/loupe.png" id="loupe_recherche" alt="loupe_recherche"></button>
+							<button class="recherche_submit" type="submit"><img src="/images/loupe.png" alt="loupe_recherche"></button>
 						</div>
 
 						<div class="ligne_recherche_filtre">
@@ -71,7 +71,7 @@
 
 							<div class="ligne_case_form">
 								<label class="label_recherche_form" for="recherche_temps">Dernière donnée</label>
-								<select class="input_recherche_form" name="recherche_temps">
+								<select class="input_recherche_form" name="recherche_temps" id="recherche_temps">
 									<option value="ALL" selected>Depuis toujours</option>
 									<option value="JOUR">Depuis aujourd'hui</option>
 									<option value="HIER">Depuis hier</option>
@@ -85,14 +85,14 @@
 
 					<div class="close_barre_overlay" id="close_barre_overlay">
 						<div id="close_barre_recherche_left"></div>
-						<button class="close_barre_recherche" onclick="close_recherche()"><img src="/images/fleche_haut.png" id="loupe_recherche" alt="loupe_recherche"></button>
+						<button class="close_barre_recherche" onclick="close_recherche()"><img src="/images/fleche_haut.png" alt="loupe_recherche"></button>
 						<div id="close_barre_recherche_right"></div>
 					</div>
 				</div>
 
 				<div class="open_barre_overlay" id="open_barre_overlay">
 					<div id="open_barre_recherche_left"></div>
-					<button class="open_barre_recherche" onclick="open_recherche()"><img src="/images/loupe.png" id="loupe_recherche" alt="loupe_recherche"></button>
+					<button class="open_barre_recherche" onclick="open_recherche()"><img src="/images/loupe.png" alt="loupe_recherche"></button>
 					<div id="open_barre_recherche_right"></div>
 				</div>
 
@@ -109,8 +109,8 @@
 
 						<div class="carte_appareil_info">
 							<div class="carte_appareil_info_contenu">
-								<span>Propriétaire : A1</span>
-								<span th:text="${'Dernière synchro : '+@getUtils.getFormatedDate(device.createDate, 'dd/MM/yyyy')}"></span>
+								<span th:if="${device.lastUpdate == null}">Dernière synchro : Aucune</span>
+								<span th:if="${device.lastUpdate != null}" th:text="${'Dernière synchro : '+@getUtils.getFormatedDate(device.lastUpdated, 'dd/MM/yyyy')}"></span>
 							</div>
 						</div>
 					</a>

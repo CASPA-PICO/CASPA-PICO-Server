@@ -1,12 +1,15 @@
 package fr.polytech.caspapicoserver.controllers;
 
-import com.mongodb.internal.connection.Server;
+import fr.polytech.caspapicoserver.database.documents.Account;
 import fr.polytech.caspapicoserver.database.repositories.DeviceRepository;
 import fr.polytech.caspapicoserver.database.repositories.RawDataRepository;
-import org.bson.types.ObjectId;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -37,7 +40,7 @@ public class WebAPIController {
 	}
 
 	@PostMapping("/device/activate")
-	public Mono<String> webapiPostDeviceActivate(Model map, ServerWebExchange swe){
+	public Mono<String> webapiPostDeviceActivate(Authentication authentication, Model map, ServerWebExchange swe){
 		return swe.getFormData().flatMap(formData -> {
 			if(formData.containsKey("deviceKey") && formData.containsKey("activationKey")){
 				String deviceKey = formData.getFirst("deviceKey");
@@ -45,14 +48,20 @@ public class WebAPIController {
 				String activationKey = formData.getFirst("activationKey");
 				if(formData.getFirst("activationKey").length() == 6){
 					return deviceRepository.findByKey(deviceKey).flatMap(device -> {
-						device.setActivationKey(activationKey);
-						return deviceRepository.save(device).flatMap(device1 -> {
-							map.addAttribute("success", true);
+						if(device.getOwner().equals(((Account)authentication.getPrincipal()).getId())){
+							device.setActivationKey(activationKey);
+							return deviceRepository.save(device).flatMap(device1 -> {
+								map.addAttribute("success", true);
+								return Mono.just("htmx/device/deviceActivate.html");
+							}).onErrorResume(throwable -> {
+								map.addAttribute("activationError", "Erreur interne au serveur");
+								return Mono.just("htmx/device/deviceActivate.html");
+							});
+						}
+						else{
+							map.addAttribute("activationError", "Vous n'êtes pas propriétaire de l'appareil");
 							return Mono.just("htmx/device/deviceActivate.html");
-						}).onErrorResume(throwable -> {
-							map.addAttribute("activationError", "Erreur interne au serveur");
-							return Mono.just("htmx/device/deviceActivate.html");
-						});
+						}
 					}).switchIfEmpty(Mono.defer(() -> {
 						map.addAttribute("activationError", "Appareil non trouvé");
 						return Mono.just("htmx/device/deviceActivate.html");

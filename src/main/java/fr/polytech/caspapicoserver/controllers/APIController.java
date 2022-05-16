@@ -4,19 +4,24 @@ import fr.polytech.caspapicoserver.database.documents.Device;
 import fr.polytech.caspapicoserver.database.documents.RawData;
 import fr.polytech.caspapicoserver.database.repositories.DeviceRepository;
 import fr.polytech.caspapicoserver.database.repositories.RawDataRepository;
+import org.bson.types.ObjectId;
 import org.springframework.core.io.buffer.DataBufferUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.result.view.Rendering;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Base64;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -68,11 +73,20 @@ public class APIController {
 					DataBufferUtils.release(dataBuffer);
 					RawData rawData;
 					try {
-						rawData = new RawData(bytes, device.getId());
+						String filename = "";
+						if(swe.getRequest().getHeaders().getFirst("filename") != null){
+							filename = swe.getRequest().getHeaders().getFirst("filename");
+						}
+						rawData = new RawData(filename, bytes, device.getId());
 					} catch (NoSuchAlgorithmException e) {
 						return Mono.just(new ResponseEntity<>("Internal server error : " + e, HttpStatus.INTERNAL_SERVER_ERROR));
 					}
-					return rawDataRepository.save(rawData).flatMap(rawData1 -> Mono.just(new ResponseEntity<>("ok", HttpStatus.OK)))
+
+					return rawDataRepository.save(rawData).flatMap(ignore_ -> {
+						device.setLastUpdate();
+						return deviceRepository.save(device).flatMap(device1 -> Mono.just(new ResponseEntity<>("ok", HttpStatus.OK)))
+								.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
+							})
 						.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
 					}
 				);
@@ -85,10 +99,6 @@ public class APIController {
 
 	@GetMapping("/devices/activate")
 	public Mono<ResponseEntity<String>> activateDevice(final ServerWebExchange swe){
-		if(!swe.getRequest().getQueryParams().containsKey("activationKey")){
-			return Mono.just(new ResponseEntity<>("missing activationKey parameter", HttpStatus.BAD_REQUEST));
-		}
-
 		String activationKey = swe.getRequest().getQueryParams().getFirst("activationKey");
 		if(activationKey == null || activationKey.isBlank()){
 			return Mono.just(new ResponseEntity<>("missing activationKey parameter", HttpStatus.BAD_REQUEST));
@@ -135,8 +145,20 @@ public class APIController {
 			if(device == null){
 				return Mono.just("no device");
 			}
-			device.setActivationKey(swe.getRequest().getQueryParams().getFirst("activationKey"));
+			device.setActivationKey(Objects.requireNonNull(swe.getRequest().getQueryParams().getFirst("activationKey")));
 			return deviceRepository.save(device).flatMap(device1 -> Mono.just("set device activation key : "+device1.getActivationKey()+" (expires "+device1.getActivationKeyExpiration().toString()+")"));
 		});
+	}
+
+	//TODO : Remove on production
+	@GetMapping("/devices/getData")
+	public Mono<String> getData(final ServerWebExchange swe){
+		if(!swe.getRequest().getQueryParams().containsKey("id")){
+			return Mono.just("no id parameter");
+		}
+		return rawDataRepository.findById(new ObjectId(swe.getRequest().getQueryParams().getFirst("id"))).flatMap(rawData -> {
+			return Mono.just(Base64.getEncoder().encodeToString(rawData.getData()));
+		}).switchIfEmpty(Mono.just("no device"))
+				.onErrorReturn("Internal server error !");
 	}
 }

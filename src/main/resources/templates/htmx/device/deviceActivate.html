@@ -12,6 +12,7 @@
 		<div class="appareillage_ligne_form">
 			<button hx-post="/webapi/device/activate" hx-target="#overlay_appareillage" id="appareillage_boutton_submit">Valider</button>
 		</div>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 	</form>
 </div>
 <div th:if="${success != null}" class="form_appareillage">

@@ -204,6 +204,7 @@
 					<input class="parametre_boutton" type="button" value="Annuler" onclick="back()"/>
 					<input class="parametre_boutton" type="submit" value="Ajouter"/>
 				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
 			</form>
 		</div>
 	</div>

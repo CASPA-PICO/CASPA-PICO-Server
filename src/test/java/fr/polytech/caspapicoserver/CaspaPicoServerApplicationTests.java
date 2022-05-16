@@ -21,6 +21,7 @@ import org.springframework.http.client.SimpleClientHttpRequestFactory;
 
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -73,7 +74,7 @@ class CaspaPicoServerApplicationTests {
 	@Test
 	public void checkDocumentRawData() throws NoSuchAlgorithmException {
 		Device device = new Device("device");
-		RawData data = new RawData("test".getBytes(StandardCharsets.UTF_8), device.getId());
+		RawData data = new RawData("testfile.txt", "test".getBytes(StandardCharsets.UTF_8), device.getId());
 		assertThat(data.getDataHash()).isEqualToIgnoringCase("ee26b0dd4af7e749aa1a8ee3c10ae9923f618980772e473f8819a5d4940e0db27ac185f8a0e1d5f84f88bc887fd67b143732c304cc5fa9ad8e6f57f50028a8ff");
 		assertThat(data.getData()).isEqualTo("test".getBytes(StandardCharsets.UTF_8));
 		assertThat(data.getDeviceID()).isEqualTo(device.getId());
@@ -82,8 +83,8 @@ class CaspaPicoServerApplicationTests {
 	@Test
 	public void checkDeviceCheck(){
 		Device device = new Device("device");
-		deviceRepository.save(device).block();
-		assertThat(deviceRepository.findById(device.getId()).block()).usingRecursiveComparison().isEqualTo(device);
+		deviceRepository.save(device).block(Duration.ofSeconds(10));
+		assertThat(deviceRepository.findById(device.getId()).block(Duration.ofSeconds(10))).usingRecursiveComparison().ignoringFields("createDate").isEqualTo(device);
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/check", String.class).getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/check?key=DefinitlyNotAKey", String.class).getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/check?key="+device.getKey(), String.class).getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -92,7 +93,7 @@ class CaspaPicoServerApplicationTests {
 	@Test
 	public void checkUploadData(){
 		Device device = new Device("device");
-		deviceRepository.save(device).block();
+		deviceRepository.save(device).block(Duration.ofSeconds(10));
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("X-API-Key", "DefinitlyNotAKey");
 		HttpEntity<String> request = new HttpEntity<>("", headers);
@@ -106,11 +107,11 @@ class CaspaPicoServerApplicationTests {
 	@Test
 	public void checkActivateDevice(){
 		Device device = new Device("device", "123456");
-		deviceRepository.save(device).block();
+		deviceRepository.save(device).block(Duration.ofSeconds(10));
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/activate?activationKey=", String.class).getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/activate?activationKey=NotAKey", String.class).getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/activate?activationKey="+device.getActivationKey(), String.class).getBody()).isEqualTo(device.getKey());
-		assertThat(Objects.requireNonNull(deviceRepository.findById(device.getId()).block()).getActivationKey()).isNull();
+		assertThat(Objects.requireNonNull(deviceRepository.findById(device.getId()).block(Duration.ofSeconds(10))).getActivationKey()).isNull();
 		assertThat(restTemplate.getForEntity("http://localhost:" + port + "/api/devices/activate?activationKey="+device.getActivationKey(), String.class).getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
 	}
 }

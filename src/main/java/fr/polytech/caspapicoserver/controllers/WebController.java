@@ -1,10 +1,13 @@
 package fr.polytech.caspapicoserver.controllers;
 
+import fr.polytech.caspapicoserver.database.documents.Account;
 import fr.polytech.caspapicoserver.database.documents.Device;
+import fr.polytech.caspapicoserver.database.repositories.AccountRepository;
 import fr.polytech.caspapicoserver.database.repositories.DeviceRepository;
 import fr.polytech.caspapicoserver.database.repositories.RawDataRepository;
 import org.bson.types.ObjectId;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,10 +25,12 @@ public class WebController {
 
 	final DeviceRepository deviceRepository;
 	final RawDataRepository rawDataRepository;
+	final AccountRepository accountRepository;
 
-	public WebController(DeviceRepository deviceRepository, RawDataRepository rawDataRepository) {
+	public WebController(DeviceRepository deviceRepository, RawDataRepository rawDataRepository, AccountRepository accountRepository) {
 		this.deviceRepository = deviceRepository;
 		this.rawDataRepository = rawDataRepository;
+		this.accountRepository = accountRepository;
 	}
 
 	@GetMapping("/")
@@ -44,8 +49,8 @@ public class WebController {
 	}
 
 	@GetMapping("/mes-appareils")
-	public Mono<String> listMyDevices(Model map, ServerWebExchange swe){
-		Mono<String> mono = deviceRepository.findByIdNotNull(PageRequest.of(0, 10)).collectList().flatMap(devices -> {
+	public Mono<String> listMyDevices(Authentication authentication, Model map, ServerWebExchange swe){
+		Mono<String> mono = deviceRepository.findByOwner(((Account)authentication.getPrincipal()).getId(), PageRequest.of(0, 10)).collectList().flatMap(devices -> {
 			map.addAttribute("devices", devices);
 			return Mono.just("devices/CASPA-PICO_MES_APPAREILS.html");
 		}).onErrorReturn("devices/CASPA-PICO_MES_APPAREILS.html");
@@ -70,13 +75,13 @@ public class WebController {
 	}
 
 	@PostMapping("/ajout-appareil")
-	public Mono<String> createDevice(@Valid Device device, BindingResult bindingResult, Model map, ServerWebExchange swe){
+	public Mono<String> createDevice(@Valid Device device, BindingResult bindingResult, Authentication authentication, Model map, ServerWebExchange swe){
 		if(device.getActivationKey() != null && !device.getActivationKey().isBlank() && device.getActivationKey().length() != 6){
 			bindingResult.rejectValue("activationKey", "device.error.activationKey_not_valid", "clé d'activation invalide !");
 		}
 
 		if(!bindingResult.hasErrors()){
-			Device newDevice = new Device(device.getDisplayName(), device.isPublicDevice(), device.getDescription());
+			Device newDevice = new Device(device.getDisplayName(), device.isPublicDevice(), device.getDescription(), ((Account)authentication.getPrincipal()).getId());
 			if(device.getActivationKey() != null && !device.getActivationKey().isBlank()){
 				newDevice.setActivationKey(device.getActivationKey());
 			}
@@ -94,7 +99,8 @@ public class WebController {
 
 	@GetMapping("/donnees")
 	public Mono<String> allDatas(){
-		return Mono.just("CASPA-PICO_DONNEES.html");
+		//return Mono.just("CASPA-PICO_DONNEES.html");
+		return Mono.just("redirect:/grafana/");
 	}
 
 	@GetMapping("/a_propos")

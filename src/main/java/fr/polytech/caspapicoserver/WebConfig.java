@@ -3,6 +3,8 @@ package fr.polytech.caspapicoserver;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.connection.ConnectionPoolSettings;
 import com.mongodb.reactivestreams.client.MongoClient;
+import com.mongodb.reactivestreams.client.MongoClients;
+import fr.polytech.caspapicoserver.Utils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -11,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.repository.config.EnableReactiveMongoRepositories;
 import org.springframework.web.reactive.config.WebFluxConfigurer;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.ISpringWebFluxTemplateEngine;
 import org.thymeleaf.spring5.SpringWebFluxTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
@@ -49,6 +52,7 @@ public class WebConfig implements ApplicationContextAware, WebFluxConfigurer {
 	@Bean
 	public ISpringWebFluxTemplateEngine thymeleafTemplateEngine() {
 		SpringWebFluxTemplateEngine templateEngine = new SpringWebFluxTemplateEngine();
+		templateEngine.addDialect(new SpringSecurityDialect());
 		templateEngine.setTemplateResolver(thymeleafTemplateResolver());
 		return templateEngine;
 	}

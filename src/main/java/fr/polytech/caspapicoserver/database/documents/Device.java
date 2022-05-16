@@ -17,6 +17,8 @@ public class Device {
 	@Id
 	@NonNull
 	private ObjectId id;
+	@NonNull
+	private ObjectId owner;
 	@NotBlank
 	private String displayName;
 	private String description;
@@ -51,8 +53,9 @@ public class Device {
 		setActivationKey(activationKey);
 	}
 
-	public Device(@NonNull String displayName, @NonNull boolean publicDevice, @NonNull String description){
+	public Device(@NonNull String displayName, @NonNull boolean publicDevice, @NonNull String description, @NonNull ObjectId owner){
 		this.id = new ObjectId();
+		this.owner = owner;
 		this.displayName = displayName;
 		this.description = description;
 		this.key = RandomStringUtils.randomAlphanumeric(64);
@@ -63,8 +66,9 @@ public class Device {
 	}
 
 	@PersistenceConstructor
-	public Device(@NonNull ObjectId id, @NonNull String displayName, String description, @NonNull String key, String activationKey, LocalDateTime activationKeyExpiration, boolean allowed, boolean publicDevice, @NonNull LocalDateTime createDate, LocalDateTime lastUpdate) {
+	public Device(@NonNull ObjectId id, @NonNull ObjectId owner, @NonNull String displayName, String description, @NonNull String key, String activationKey, LocalDateTime activationKeyExpiration, boolean allowed, boolean publicDevice, @NonNull LocalDateTime createDate, LocalDateTime lastUpdate) {
 		this.id = id;
+		this.owner = owner;
 		this.displayName = displayName;
 		this.description = description;
 		this.key = key;
@@ -79,6 +83,11 @@ public class Device {
 	@NonNull
 	public ObjectId getId() {
 		return id;
+	}
+
+	@NonNull
+	public ObjectId getOwner(){
+		return owner;
 	}
 
 	public void setDisplayName(@NonNull String displayName) {
@@ -144,6 +153,12 @@ public class Device {
 		return createDate;
 	}
 
+	public void setLastUpdate(){
+		setLastUpdate(LocalDateTime.now());
+	}
+	public void setLastUpdate(LocalDateTime lastUpdate){
+		this.lastUpdate = lastUpdate;
+	}
 	public LocalDateTime getLastUpdate() {
 		return lastUpdate;
 	}
