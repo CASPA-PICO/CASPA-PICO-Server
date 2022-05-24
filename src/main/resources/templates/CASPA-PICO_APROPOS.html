@@ -1,58 +1,170 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>CASPA-PICO</title>
-        <link rel="stylesheet" href="others/CASPA-PICO.css" />
-    </head>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport">
+	<title>CASPA-PICO</title>
+	<link rel="stylesheet" href="others/CASPA-PICO.css" />
+	<script src="others/CASPA-PICO.js" defer></script>
+	<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
 
-    <body>
-        <header>
-            <div id="titre_principale">
-                
-                <a class="link" href="/"><img src="images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
-                <a class="link" href="/">CASPA-PICO</a>
-                
-            </div>
+<body>
+<header>
+	<div id="titre_principale">
 
-            <nav>
-                <ul id="nav_principale">
-                    <li>
-                        <a class="link" href="/">Accueil</a>
-                    </li>
+		<a class="link" href="/"><img src="/images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
+		<a class="link" href="/">CASPA-PICO</a>
 
-                    <li>
-                        <a class="link" href="/appareils">Appareils</a>
-                    </li>
+	</div>
 
-                    <li>
-                        <a class="link" href="/donnees">Données</a>
-                    </li>
+	<nav>
+		<ul id="nav_principale">
+			<li>
+				<a class="link" href="/">Accueil</a>
+			</li>
 
-                    <li>
-                        <a class="link" href="/a_propos" id="page_courante">A propos</a>
-                    </li>
-                </ul>
-            </nav>
+			<li>
+				<a class="link" href="/appareils">Appareils</a>
+			</li>
 
-        </header>
-        
-        <div id="sous_titre_principale">
-            <a class="fonction" href="">Ptit Message</a>
-        </div>
+			<li>
+				<a class="link" href="/donnees">Données</a>
+			</li>
 
-        <div id="corps">
+			<li>
+				<a class="link" href="/a_propos" id="page_courante">A propos</a>
+			</li>
+		</ul>
+	</nav>
 
-        </div>
+</header>
 
-        <footer>
-            <figure id="logo_supervisor">
-                <img src="images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
-                <img src="images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
-                <img src="images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
-                <img src="images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
-            </figure>
-        </footer>
-    </body>
-    
+<div id="sous_titre_principale">
+	<a class="fonction" href="">En découvrir davantage sur nous</a>
+</div>
+
+<div id="corps">
+	<div class="corps_apropos">
+		<div class="apropos_section">
+			<h4>Équipe de developpement du dock</h4>
+
+			<span class="apropos_msg">
+                        Nous sommes une fraîche équipe de 5 étudiants de Polytech Sorbonne, spécialisés en électronique et informatique
+                        pour les systèmes embarqués et nous sommes fiers de vous présenter notre projet industriel, développé durant notre quatrième année.
+                    </span>
+
+			<div class="section_carte">
+				<a class="apropos_carte" href="https://www.linkedin.com/in/pierre-louis-lagunegrand-1660a1195/" target="_blank">
+					<div class="apropos_carte_image_emplacement">
+						<img class="apropos_carte_image" src="/images/Acteurs/Pierre-Louis.jpg" alt="carte_appareil_image">
+					</div>
+
+					<div class="apropos_carte_nom">
+						<h8>
+							LAGUNEGRAND Pierre-Louis
+						</h8>
+					</div>
+
+					<img class="apropos_carte_info" src="/images/linkedin.png" alt="">
+
+				</a>
+
+				<a class="apropos_carte" href="https://www.linkedin.com/in/thomas-roussarie/" target="_blank">
+					<div class="apropos_carte_image_emplacement">
+						<img class="apropos_carte_image" src="/images/Acteurs/Thomas.png" alt="carte_appareil_image">
+					</div>
+
+					<div class="apropos_carte_nom">
+						<h8>
+							ROUSSARIE Thomas
+						</h8>
+					</div>
+
+					<img class="apropos_carte_info" src="/images/linkedin.png" alt="">
+				</a>
+
+				<a class="apropos_carte" href="https://www.linkedin.com/in/nicolas-stein-pro/" target="_blank">
+					<div class="apropos_carte_image_emplacement">
+						<img class="apropos_carte_image" src="/images/Acteurs/Nicolas.png" alt="carte_appareil_image">
+					</div>
+
+					<div class="apropos_carte_nom">
+						<h8>
+							STEIN Nicolas
+						</h8>
+					</div>
+
+					<img class="apropos_carte_info" src="/images/linkedin.png" alt="">
+				</a>
+
+				<a class="apropos_carte" href="https://www.linkedin.com/in/thanh-liem-ta/" target="_blank">
+					<div class="apropos_carte_image_emplacement">
+						<img class="apropos_carte_image" src="/images/Acteurs/Thanh-Liem.jpg" alt="carte_appareil_image">
+					</div>
+
+					<div class="apropos_carte_nom">
+						<h8>
+							TA Thanh-Liem
+						</h8>
+					</div>
+
+					<img class="apropos_carte_info" src="/images/linkedin.png" alt="">
+				</a>
+
+				<a class="apropos_carte" href="https://www.linkedin.com/in/yalaoui-amel-60a7291ab/" target="_blank">
+					<div class="apropos_carte_image_emplacement">
+						<img class="apropos_carte_image" src="/images/Acteurs/Amel.png" alt="carte_appareil_image">
+					</div>
+
+					<div class="apropos_carte_nom">
+						<h8>
+							YALAOUI Amel
+						</h8>
+					</div>
+
+					<img class="apropos_carte_info" src="/images/linkedin.png" alt="">
+				</a>
+			</div>
+
+		</div>
+
+		<div class="apropos_section">
+			<h4>Coopérations</h4>
+
+			<span class="apropos_msg">Nous souhaitons grandement remercier Nadir Amarouche, Hervé Barrois, Matthieu Freichey et Burak Duru
+                        de la division technique de l’INSU, Sébastien Payan de la responsabilité scientifique du LATMOS ainsi que
+                        Nicolas Pascal, Sébastien Huart et Loredana Focsa du groupe AERIS/ICARE.
+                    </span>
+
+			<span class="apropos_msg">Nous voulons également remercier Roselyne Chotin, Cathy Morot et Yann Douze nos professeurs encadrants.
+
+                    </span>
+		</div>
+
+		<div class="apropos_section">
+			<h4>Documentation et téléchargements</h4>
+
+			<span class="apropos_msg"> Vous pourrez retrouver dans cette section toute la documentation, nos codes et nos réalisations :)</span>
+			<div class="modele_3D">
+				<model-viewer poster="images/LOGO_CASPA-PICO.png" src="/images/Base.gltf" camera-controls auto-rotate auto-rotate-delay="1500" rotation-per-second="0.25rad"></model-viewer>
+				<a class="lien_github" href="https://github.com/CASPA-PICO" target="_blank">
+					<span>Retrouver nos codes et nos réalisations sur GitHub ! :)</span>
+					<img class="logo_github" src="/images/GitHub.png" alt="GitHub logo">
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<figure id="logo_supervisor">
+		<img src="/images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
+		<img src="/images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
+		<img src="/images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
+		<img src="/images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
+	</figure>
+</footer>
+</body>
+
 </html>

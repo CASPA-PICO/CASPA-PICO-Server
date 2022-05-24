@@ -183,7 +183,7 @@ footer{
 }
 
 #liste_appareils{
-    background-color: #8e7db5;
+    background-color: #9c8cc1;
     border-radius: 5px 20px 0px 0px;
 }
 
@@ -199,12 +199,129 @@ footer{
     margin: 0vh 5vh 0vh 5vh;
 }
 
+.corps_accueil{
+    background-color: #c1edfd;
+
+    font-size: 110%;
+    min-height: fit-content;
+
+    margin: 2vh 5vh 0vh 5vh;
+
+    justify-content: center;
+
+    border-radius: 5px 5px 5px 5px;
+    border: black 3px solid;
+
+    overflow-y: auto;
+}
+
+.accueil_titre{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+    border-bottom: 2px black solid;
+    border-top: 2px black solid;
+}
+
+h1{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 400%;
+}
+
+.baniere{
+   width: 100%;
+   height: 400px;
+
+   display: flex;
+}
+
+.baniere_ext_1_droite{
+    width: 100%;
+}
+
+
+.baniere_ext_2_gauche{
+    width: 100%;
+}
+
+.baniere_ext_2_droite{
+    width: 30%;
+}
+
+.carte_baniere_gauche_info_contenu{
+    position: relative;
+
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+}
+
+.carte_baniere_gauche_info{
+    position: relative;
+    top: -5%;
+    width: 0px;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+
+    transform: translateX(250px);
+}
+
+.carte_baniere_droite_info_contenu{
+    position: relative;
+
+    font-size: 17px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.carte_baniere_droite_info{
+    position: relative;
+    top: 0%;
+    right: 0%;
+    width: 0px;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+
+    transform: translateX(-300px);
+}
+
+
+.baniere:hover .carte_baniere_gauche_info{
+    visibility: visible;
+    opacity: 100;
+    transform: translateX(400px);
+}
+
+.baniere:hover .carte_baniere_droite_info{
+    visibility: visible;
+    opacity: 100;
+    transform: translateX(-350px);
+}
+
 .corps_object_mes_appareils{
     background-color: #b1cddf;
 
     font-size: 110%;
     min-height: 650px;
-    max-height: 1300px;
+    max-height: 1000px;
 
     display: flex;
 
@@ -215,11 +332,11 @@ footer{
 }
 
 .corps_object_liste{
-    background-color: #8e7db5;
+    background-color: #9c8cc1;
 
     font-size: 110%;
     min-height: 650px;
-    max-height: 1300px;
+    max-height: 1000px;
 
     display: flex;
     flex-direction: column;
@@ -418,13 +535,16 @@ footer{
     border-right: none;
 }
 
-.un_appareil_info_actif{
+.un_appareil_info_actif, .un_appareil_info_fav_actif{
     height: 100%;
     position: relative;
 
     display: flex;
     flex-direction: column;
+}
 
+h2{
+    font-size: 250%;
 }
 
 h3{
@@ -450,16 +570,40 @@ h5{
     align-self: center;
     white-space: nowrap;
 }
+
+h6{
+    font-size: 250%;
+
+    white-space: nowrap;
+}
+
+h7{
+    font-size: 130%;
+    width: 500px;
+
+}
+
+h8{
+    text-align: center;
+
+    font-size: 100%;
+    font-weight: 700;
+
+    align-self: center;
+    word-break: break-word;
+
+    text-decoration: none;
+}
+
 #appareil_accueil{
     display: none;
 }
 
 #appareil_accueil_info{
     margin: 10vh 5vh 0vh 5vh;
-    border:3px green solid;
 }
 
-.un_appareil_info_cache{
+.un_appareil_info_cache, .un_appareil_info_fav_cache{
     display: none;
 }
 
@@ -703,7 +847,7 @@ h5{
 #appareillage_boutton_submit{
     font-size: large;
     width: 200px;
-    margin: auto;
+
     cursor: pointer;
 }
 
@@ -822,7 +966,7 @@ input[type=number]{
     min-height: 0px;
     height: 0px;
 
-    background-image: radial-gradient(circle, #6c5999, #8c7db0);
+    background-image: radial-gradient(circle, #6c5999, #9c8cc1);
 
     display: flex;
     flex-direction: column;
@@ -1059,7 +1203,6 @@ input[type=number]{
 
 .carte_appareil_info_contenu{
 
-    font: 500;
     font-size: 20px;
     display: flex;
     flex-direction: column;
@@ -1099,7 +1242,7 @@ input[type=number]{
 }
 
 #favoris{
-    background-color: #8e7db5;
+    background-color: #9c8cc1;
     border-radius: 5px 20px 0px 0px;
 }
 
@@ -1118,7 +1261,7 @@ input[type=number]{
 
     font-size: 110%;
     min-height: 650px;
-    max-height: 1300px;
+    max-height: 1000px;
 
     display: flex;
 
@@ -1129,11 +1272,11 @@ input[type=number]{
 }
 
 .corps_object_favoris{
-    background-color: #8e7db5;
+    background-color: #9c8cc1;
 
     font-size: 110%;
     min-height: 650px;
-    max-height: 1300px;
+    max-height: 1000px;
 
     display: flex;
 
@@ -1148,7 +1291,7 @@ input[type=number]{
 
     font-size: 110%;
     min-height: 650px;
-    max-height: 1300px;
+    max-height: 1000px;
 
     display: flex;
 
@@ -1157,3 +1300,214 @@ input[type=number]{
 
     overflow-y: auto;
 }
+
+.un_appareil_fav_actif{
+    font-size: 140%;
+    font-weight: bold;
+    background-color: #6343ae;
+    width: 100%;
+    height: 75px;
+
+    border: none;
+    cursor: pointer;
+}
+
+.un_appareil_fav{
+    font-size: 120%;
+    background-color: #755cb0;
+    width: 100%;
+    height: 75px;
+
+    border: none;
+    cursor: pointer;
+
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.corps_apropos{
+    background-color: #b1a1d6;
+
+    font-size: 110%;
+    min-height: fit-content;
+
+    margin: 2vh 5vh 0vh 5vh;
+
+    justify-content: center;
+
+    border-radius: 5px 5px 5px 5px;
+    border: black 3px solid;
+
+    overflow-y: auto;
+}
+
+.apropos_section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    border-bottom: 2px black solid;
+    border-radius: 20px;
+}
+
+.apropos_msg{
+    font-size: 120%;
+    width: 62%;
+
+    text-align: center;
+
+    margin-bottom: 5vh;
+}
+
+.section_carte{
+    width: 100%;
+    display: flex;
+
+    margin-bottom: 5vh;
+
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.apropos_carte{
+    height: 270px;
+    width: 200px;
+
+    background-color: #986f82;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    margin: 10px 3vh 10px 3vh;
+
+    cursor: pointer;
+
+    transition : all 2.5s ease-in-out;
+    -o-transition : all 2.5s ease-in-out;
+    -moz-transition : all 2.5s ease-in-out;
+    -webkit-transition : all 2.5s ease-in-out;
+
+    border: 5px black solid;
+    border-radius: 5%;
+
+    text-decoration: none;
+}
+
+.apropos_carte_image_emplacement{
+    height: 125px;
+    width: 100%;
+
+    background-color: #CDCFCE;
+
+    position: relative;
+    top: 15%;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+
+    border-top: 3px black solid;
+    border-bottom: 3px black solid;
+}
+
+.apropos_carte_image{
+    height: 100%;
+    width: 100%;
+
+    object-fit: contain;
+}
+
+.apropos_carte_nom{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+
+    position: relative;
+    top:20%;
+
+    transition : all 0.9s ease-in-out;
+    -o-transition : all 0.9s ease-in-out;
+    -moz-transition : all 0.9s ease-in-out;
+    -webkit-transition : all 0.9s ease-in-out;
+}
+
+.apropos_carte_info_contenu{
+
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.apropos_carte_info{
+    width: 20%;
+
+    position: relative;
+    top: 25%;
+
+    visibility: hidden;
+    opacity: 0;
+
+    transition : all 0.5s ease-in-out;
+    -o-transition : all 0.5s ease-in-out;
+    -moz-transition : all 0.5s ease-in-out;
+    -webkit-transition : all 0.5s ease-in-out;
+}
+
+.apropos_carte:hover{
+    background: #6c5999;
+    background: linear-gradient(135deg, #6f54ae 10%, #be7999 90%);
+}
+
+.apropos_carte:hover .apropos_carte_image_emplacement{
+    top: 5%;
+}
+
+.apropos_carte:hover .apropos_carte_nom{
+    top: 10%;
+}
+
+.apropos_carte:hover .apropos_carte_info{
+    visibility: visible;
+    top: 20%;
+    opacity: 100;
+}
+
+.modele_3D{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 10px;
+}
+
+.lien_github{
+    width: fit-content;
+    height: fit-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    margin-left: 40px;
+}
+
+.logo_github{
+    width: 300px;
+
+    margin-top: 30px;
+}
+
+model-viewer{
+    width: 600px;
+    height: 400px;
+
+    border-radius: 20px;
+}
+

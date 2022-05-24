@@ -1,56 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>CASPA-PICO</title>
-        <link rel="stylesheet" href="others/CASPA-PICO.css" />
-    </head>
+<head>
+	<meta charset="utf-8" />
+	<title>CASPA-PICO</title>
+	<link rel="stylesheet" href="others/CASPA-PICO.css" />
+	<script src="others/CASPA-PICO.js" defer></script>
+</head>
 
-    <body>
-        <header>
-            <div id="titre_principale">
-                <a class="link" href="/"><img src="images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
-                <a class="link" href="/">CASPA-PICO</a>
-            </div>
+<body>
+<header>
+	<div id="titre_principale">
+		<a class="link" href="CASPAPICO_ACCUEIL.html"><img src="/images/LOGO_CASPA-PICO.png" alt="Logo" id="logo_principale"/></a>
+		<a class="link" href="CASPAPICO_ACCUEIL.html">CASPA-PICO</a>
+	</div>
 
-            <nav>
-                <ul id="nav_principale">
-                    <li>
-                        <a class="link" href="/" id="page_courante">Accueil</a>
-                    </li>
-                    
-                    <li>
-                        <a class="link" href="/appareils">Appareils</a>
-                    </li>
+	<nav>
+		<ul id="nav_principale">
+			<li>
+				<a class="link" href="/" id="page_courante">Accueil</a>
+			</li>
 
-                    <li>
-                        <a class="link" href="/donnees">Données</a>
-                    </li>
+			<li>
+				<a class="link" href="/appareils">Appareils</a>
+			</li>
 
-                    <li>
-                        <a class="link" href="/a_propos">A propos</a>
-                    </li>
-                </ul>      
-            </nav>
+			<li>
+				<a class="link" href="/donnees">Données</a>
+			</li>
 
-        </header>
-        
-        <div id="sous_titre_principale">
-            <a class="fonction" href="">Ptit Message</a>
-        </div>
+			<li>
+				<a class="link" href="/a_propos">A propos</a>
+			</li>
+		</ul>
+	</nav>
 
-        <div id="corps">
-            
-        </div>
+</header>
 
-        <footer>
-            <figure id="logo_supervisor">
-                <img src="images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
-                <img src="images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
-                <img src="images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
-                <img src="images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
-            </figure>
-        </footer>
-    </body>
-    
+<div id="sous_titre_principale">
+	<a class="fonction" href="">Bienvenue sur notre site CASPA-PICO</a>
+</div>
+
+<div id="corps">
+	<div class="corps_accueil">
+
+		<div class="baniere">
+
+			<div class="carte_baniere_gauche_info">
+				<div class="carte_baniere_gauche_info_contenu">
+					<h6>Nouveau dock</h6>
+					<h7>La solution pour recharger et récupérer toutes les données en toute sécurité</h7>
+				</div>
+			</div>
+
+			<img class="baniere_ext_2_gauche" src="/images/base2_side_gauche.jpg" alt="extention_base2_img">
+			<img class="baniere_img" src="/images/base2.jpg" alt="base_plan_large">
+			<img class="baniere_ext_2_droite" src="/images/base2_side_droite.jpg" alt="extention_base2_img">
+		</div>
+
+		<div class="accueil_titre">
+			<h1>
+				CASPA-PICO
+			</h1>
+		</div>
+
+		<div class="baniere">
+			<img class="baniere_ext_1_gauche" src="/images/base1_side_gauche.jpg" alt="extention_base2_img">
+			<img class="baniere_img" src="/images/base1.jpg" alt="base_plan_large">
+			<img class="baniere_ext_1_droite" src="/images/base1_side_droite.jpg" alt="extention_base2_img">
+
+			<div class="carte_baniere_droite_info">
+				<div class="carte_baniere_droite_info_contenu">
+					<h6>Concentré de technologie</h6>
+					<h7>Équipée d'un ESP-32, une connexion Ethernet et d'un écran OLED</h7>
+					<h7>Le dock offre un transfert et un confort incomparable</h7>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer>
+	<figure id="logo_supervisor">
+		<img src="/images/LOGO_SU.png" alt="LOGO_SU" id="LOGO_SU"/>
+		<img src="/images/LOGO_INSU.png" alt="LOGO_INSU" id="LOGO_INSU"/>
+		<img src="/images/LOGO_LATMOS.png" alt="LOGO_LATMOS" id="LOGO_LATMOS"/>
+		<img src="/images/LOGO_PARTICITAE.png" alt="LOGO_PARTICITAE" id="LOGO_PARTICITAE"/>
+	</figure>
+</footer>
+</body>
+
 </html>

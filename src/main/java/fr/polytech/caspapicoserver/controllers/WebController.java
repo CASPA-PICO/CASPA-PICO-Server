@@ -17,7 +17,9 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TreeMap;
 
 @Controller
@@ -67,7 +69,7 @@ public class WebController {
 
 	@GetMapping("/ajout-appareil")
 	public Mono<String> addDevice(Model map, ServerWebExchange swe){
-		if(!map.containsAttribute("device")){
+		if(!map.containsAttribute("device") || map.containsAttribute("createdDevice")){
 			map.addAttribute("device", new Device());
 		}
 		addCountryListToModel(map);
@@ -87,7 +89,8 @@ public class WebController {
 			}
 			return deviceRepository.save(newDevice).flatMap(device1 -> {
 				map.addAttribute("createdDevice", device1.getId());
-				return Mono.just("devices/CASPA-PICO_ADD_APPAREIL_SUCCESS.html");
+				//return Mono.just("devices/CASPA-PICO_ADD_APPAREIL_SUCCESS.html");
+				return addDevice(map, swe);
 			}).onErrorResume(throwable -> {
 				bindingResult.rejectValue("displayName", "server.error.database", "erreur interne lors de l'ajout de l'appareil");
 				return addDevice(map, swe);

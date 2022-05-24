@@ -31,8 +31,10 @@
 			</tr>
 
 			<tr>
-				<td class="tableau_nom_info">Dernière données :</td>
-				<td class="tableau_info" id="tableau_derniere_donnee">N/A</td>
+				<td class="tableau_nom_info">Dernière synchro :</td>
+				<td class="tableau_info" id="tableau_derniere_donnee" th:if="${device.lastUpdate == null}">Aucune</td>
+				<td class="tableau_info" id="tableau_derniere_donnee" th:if="${device.lastUpdate != null}"
+					th:text="${@getUtils.getFormatedDate(device.lastUpdate, 'dd/MM/yyyy')}"></td>
 			</tr>
 
 			<tr>
@@ -42,14 +44,14 @@
 			</tr>
 		</table>
 		<a class="rouage" href="parametre.html">
-			<img src="images/rouage.png" alt="parametre" id="logo_rouage1"/>
-			<img src="images/rouage.png" alt="parametre" id="logo_rouage2"/>
-			<img src="images/rouage.png" alt="parametre" id="logo_rouage3"/>
+			<img src="/images/rouage.png" alt="parametre" id="logo_rouage1"/>
+			<img src="/images/rouage.png" alt="parametre" id="logo_rouage2"/>
+			<img src="/images/rouage.png" alt="parametre" id="logo_rouage3"/>
 		</a>
 
 		<button type="button" class="appareillage" onclick="appareillage_on()"
 		th:hx-get="'/webapi/device/activate?deviceKey='+${device.key}" hx-target="#overlay_appareillage">
-			<img src="images/appareillage.png" alt="appareillage" id="logo_appareillage">
+			<img src="/images/appareillage.png" alt="appareillage" id="logo_appareillage">
 			<p id="ID_appareil">Activer cet appareil</p>
 		</button>
 	</div>

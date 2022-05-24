@@ -1,5 +1,5 @@
 <div th:if="${success == null}" class="form_appareillage">
-	<form>
+	<form class="form_appareillage">
 		<button type="button" class="appareillage_close" onclick="appareillage_off()">
 			+
 		</button>
@@ -16,6 +16,6 @@
 	</form>
 </div>
 <div th:if="${success != null}" class="form_appareillage">
-	<h2>Activation enregistré !</h2>
-	<button onclick="appareillage_off()">Fermer</button>
+	<label class="appareillage_label_form">Activation enregistré !</label>
+	<button id="appareillage_boutton_submit" onclick="appareillage_off()">Fermer</button>
 </div>
