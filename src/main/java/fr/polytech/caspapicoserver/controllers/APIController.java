@@ -119,46 +119,4 @@ public class APIController {
 				.switchIfEmpty(Mono.just(new ResponseEntity<>("no device", HttpStatus.FORBIDDEN)))
 				.onErrorReturn(new ResponseEntity<>("Internal server error !", HttpStatus.INTERNAL_SERVER_ERROR));
 	}
-
-
-	//TODO : Remove on production
-	@GetMapping("/devices/create")
-	public Mono<String> createDevice(final ServerWebExchange swe){
-		if(!swe.getRequest().getQueryParams().containsKey("displayName")){
-			return Mono.just("no displayName parameter");
-		}
-		Device device = new Device(swe.getRequest().getQueryParams().getFirst("displayName"));
-		return deviceRepository.save(device).flatMap(device1 -> Mono.just("Created device "+device1.getDisplayName()+" with key : "+device1.getKey()));
-	}
-
-	//TODO : Remove on production
-	@GetMapping("/devices/createActivation")
-	public Mono<String> createActivation(final ServerWebExchange swe){
-		if(!swe.getRequest().getQueryParams().containsKey("key")){
-			return Mono.just("no key parameter");
-		}
-		if(!swe.getRequest().getQueryParams().containsKey("activationKey")){
-			return Mono.just("missing activationKey parameter");
-		}
-
-		return deviceRepository.findByKey(swe.getRequest().getQueryParams().getFirst("key")).flatMap(device -> {
-			if(device == null){
-				return Mono.just("no device");
-			}
-			device.setActivationKey(Objects.requireNonNull(swe.getRequest().getQueryParams().getFirst("activationKey")));
-			return deviceRepository.save(device).flatMap(device1 -> Mono.just("set device activation key : "+device1.getActivationKey()+" (expires "+device1.getActivationKeyExpiration().toString()+")"));
-		});
-	}
-
-	//TODO : Remove on production
-	@GetMapping("/devices/getData")
-	public Mono<String> getData(final ServerWebExchange swe){
-		if(!swe.getRequest().getQueryParams().containsKey("id")){
-			return Mono.just("no id parameter");
-		}
-		return rawDataRepository.findById(new ObjectId(swe.getRequest().getQueryParams().getFirst("id"))).flatMap(rawData -> {
-			return Mono.just(Base64.getEncoder().encodeToString(rawData.getData()));
-		}).switchIfEmpty(Mono.just("no device"))
-				.onErrorReturn("Internal server error !");
-	}
 }

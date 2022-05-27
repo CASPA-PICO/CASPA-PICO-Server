@@ -44,6 +44,9 @@ public class InfluxDBTask {
 	@Value("${influxdb.url}")
 	private String influxDBUrl;
 
+	/**
+	 * On transfère toutes les minutes les données en attente de la base de données MongoDB à la base de données InfluxDB
+	 */
 	@Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
 	public void runTask(){
 
@@ -57,16 +60,15 @@ public class InfluxDBTask {
 		WriteApiBlocking writeApiBlocking = client.getWriteApiBlocking();
 		for(RawData data : dataList){
 			try{
+				/*
+				 * Pour chaque donnée RawData, on les parse en une liste de points qu'on envoie ensuite à InfluxDB
+				 * Pour modifier la façon dont les données sont interprétés, il faut modifier MV11Parser.parseData()
+				 */
 				List<Point> points = MV11Parser.parseData(data.getData(), data.getDeviceID());
 				for(Point point : points){
-					try{
-						writeApiBlocking.writePoint(influxDBBuket, influxDBOrg, point);
-						data.setInfluxDBTransfertStatus(RawData.InfluxDBTransfertStatus.Transfered);
-						rawDataRepository.save(data).block();
-					}
-					catch (Exception e){
-						e.printStackTrace();
-					}
+					writeApiBlocking.writePoint(influxDBBuket, influxDBOrg, point);
+					data.setInfluxDBTransfertStatus(RawData.InfluxDBTransfertStatus.Transfered);
+					rawDataRepository.save(data).block();
 				}
 			}
 			catch (Exception e){

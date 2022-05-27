@@ -78,17 +78,6 @@ public class WebAPIController {
 			}
 			return Mono.empty();
 		});
-		/*String activationKey = "", deviceKey = "";
-		if(activationKey.length() != 6){
-			map.addAttribute("activationKeyError", "La clé d'activation faire 6 caractères de long");
-			map.addAttribute("deviceKey", deviceKey);
-			return Mono.just("htmx/device/deviceActivate.html");
-		}
-
-		return deviceRepository.findByKey(deviceKey).flatMap(device -> {
-			device.setActivationKey(activationKey);
-			return deviceRepository.save(device).flatMap( device1 -> Mono.just(""));
-		});*/
 	}
 
 }

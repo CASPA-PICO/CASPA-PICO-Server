@@ -28,6 +28,9 @@ import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+/**
+ * Classe contenant quelques tests unitaires pour vérifier le bon fonctionnement du serveur
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureDataMongo
 class CaspaPicoServerApplicationTests {

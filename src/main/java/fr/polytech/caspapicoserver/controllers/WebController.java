@@ -102,7 +102,6 @@ public class WebController {
 
 	@GetMapping("/donnees")
 	public Mono<String> allDatas(){
-		//return Mono.just("CASPA-PICO_DONNEES.html");
 		return Mono.just("redirect:/grafana/");
 	}
 
